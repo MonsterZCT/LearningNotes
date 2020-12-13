@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    //发布者
+    var Publisher = (function () {
+        //事件频道及其对应的订阅者列表
+        let _Dp = {
+            // 'type': [...watchers]
+        };
+        return {
+            //某订阅者 订阅频道
+            addSubscriber(type, watcher) {
+
+                if (typeof _Dp[type] === 'undefined') {
+                    _Dp[type] = [watcher];
+                } else {
+                    _Dp[type].push(watcher);
+                }
+            },
+            //发布者发布消息
+            publish(type, args) {
+                if (!_Dp[type]) {
+                    //如果消息还没被注册
+                    throw new Error('消息还没被注册');
+                    return;
+                }
+                for (let i = 0; i < _Dp[type].length; i++) {
+                    _Dp[type][i].update(args);
+                }
+            },
+            //某订阅者取消订阅
+            removeSubscriber(type, watcher) {
+                //如果该事件频道 订阅者队列存在
+                if (_Dp[type] instanceof Array) {
+                    let i = _Dp[type].length - 1;
+                    for (; i >= 0; i--) {
+                        _Dp[type][i] == watcher && _Dp[type].splice(i, 1);
+                    }
+                }
+            },
+            //发布者删除某频道
+            removeType(type) {
+                delete _Dp[type]
+            }
+        }
+    })();
+
+    //订阅者函数
+    function Subscriber(name) {
+        return {
+            name,
+            //订阅者更新函数
+            update(e) {
+                console.log(this.name + e);
+            }
+        }
+    }
+
+    //新建两个订阅者对象 jack 和 lili
+    let Subscriber_jack = new Subscriber('jack');
+    let Subscriber_lili = new Subscriber('lili');
+
+    //订阅者订阅事件频道
+    Publisher.addSubscriber('click', Subscriber_jack);
+    Publisher.addSubscriber('click', Subscriber_lili);
+
+    //发布者在某事件频道 发布消息
+    Publisher.publish('click', ' click动作');
+</script>

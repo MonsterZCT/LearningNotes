@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+</body>
+
+</html>
+<script>
+    //被观察者函数
+    function BeObserver(_observerName) {
+        return {
+            //被观察者对象
+            _observerName,
+            //观察者列表
+            _observerList: [],
+            //添加观察者
+            addObserver(observer) {
+                if (this._observerList.indexOf(observer) === -1) {
+                    //如果不存在该观察者，则添加至列表
+                    this._observerList.push(observer);
+                }
+            },
+            //移除观察者
+            removeObserver(observer) {
+                let index = this._observerList.indexOf(observer);
+                if (index !== -1) {
+                    this._observerList.splice(index, 1)
+                }
+            },
+            //被观察者进行动作
+            fire(args) {
+                this._observerList.forEach(observer => {
+                    observer.update(this._observerName, args);
+                });
+            }
+        }
+    }
+
+    //观察者函数
+    function Observer(_observername) {
+        return {
+            _observername: _observername,
+            update(_observerName, args) {
+                console.log(this._observername + '的' + _observerName + '事件' + args);
+            }
+        }
+    }
+
+    //新建观察者
+    let observer1 = new Observer('jack');
+    let observer2 = new Observer('lili');
+
+    //新建被观察者
+    let beObserver = new BeObserver('click');
+
+    //将观察者添加进观察者列表
+    beObserver.addObserver(observer1);
+    beObserver.addObserver(observer2);
+
+    //被观察者进行动作
+    beObserver.fire('更新啦！');
+</script>
