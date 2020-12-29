@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	工厂模式的目的在于创建对象，实现下列目标：
+	可重复执行，来创建相似对象；
+	当编译时位置具体类型（类）时，为调用者提供一种创建对象的接口；
+</body>
+
+</html>
+<script>
+	//工厂模式的目的在于创建对象， 实现下列目标：
+	//可重复执行， 来创建相似对象；
+	//当编译时位置具体类型（ 类） 时， 为调用者提供一种创建对象的接口；
+
+	//简单工厂模式
+	function Person(name, age, sex) {
+		let p = {};
+		p.name = name;
+		p.age = age;
+		p.sex = sex;
+		p.say = function () {
+			console.log(p.name, p.age, p.sex);
+		}
+		return p;
+	}
+	let jack = new Person('jack', 12, 'boy');
+	let lili = new Person('jack', 16, 'gril');
+	console.log(jack);
+	console.log(lili);
+
+	
+</script>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	策略模式(Strategy Pattern)：封装一系列算法，支持我们在运行时，
+	使用相同接口，选择不同算法。它的目的是为了将算法的使用与算法的实现分离开来。
+	策略模式通常会有两部分组成，一部分是策略类，
+	它负责实现通用的算法，另一部分是环境类，它用户接收客户端请求并委托给策略类。
+</body>
+
+</html>
+<script>
+	let fun1 = (number) => number + 1;
+	let fun2 = (number) => number + 3;
+	let fun3 = (number) => number + 5;
+	let add = {
+		'add1': (number) => fun1(number),
+		'add3': (number) => fun2(number),
+		'add5': (number) => fun3(number),
+	}
+	let fun = (type, number) => add[type](number);
+	console.log(fun('add1', 55));
+</script>

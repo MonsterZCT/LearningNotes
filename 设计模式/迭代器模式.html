@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	迭代器模式(Iterator Pattern) 是提供一种方法，顺序访问一个聚合对象中每个元素，并且不暴露该对象内部。
+
+	这种模式属于行为型模式，有以下几个特点：
+
+	访问一个聚合对象的内容，而无需暴露它的内部表示。
+
+	提供统一接口来遍历不同结构的数据集合。
+
+	遍历的同事更改迭代器所在的集合结构可能会导致问题。
+
+	在迭代器模式中，通常包含有一个包含某种数据集合的对象，需要提供一种简单的方法来访问每个元素。
+	这里对象需要提供一个 next()方法，每次调用都必须返回下一个连续的元素。
+</body>
+
+</html>
+<script>
+	//迭代器模式(Iterator Pattern) 是提供一种方法，顺序访问一个聚合对象中每个元素，并且不暴露该对象内部。
+	//这种模式属于行为型模式，有以下几个特点：
+	//访问一个聚合对象的内容，而无需暴露它的内部表示。
+	//提供统一接口来遍历不同结构的数据集合。
+	//遍历的同事更改迭代器所在的集合结构可能会导致问题。
+	//在迭代器模式中，通常包含有一个包含某种数据集合的对象，需要提供一种简单的方法来访问每个元素。
+	//这里对象需要提供一个 next()方法，每次调用都必须返回下一个连续的元素。
+	function Cycle() {
+		return (function () {
+			let index = 0,
+				array = [1, 2, 3, 4, 5],
+				len = array.length;
+			return {
+				next: function () {
+					let obj;
+					if (!this.hasNext()) {
+						return null;
+					}
+					obj = array[index];
+					index = index + 1;
+					return obj;
+				},
+				hasNext: function () {
+					return index < len;
+				}
+			}
+		})()
+	};
+	let newCycle = new Cycle();
+	console.log(newCycle.next());
+	console.log(newCycle.next());
+	console.log(newCycle.next());
+	console.log(newCycle.next());
+	console.log(newCycle.next());
+	console.log(newCycle.next());
+</script>

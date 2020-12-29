@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	//单体模式(Singleton Pattern)的思想在于保证一个特定类仅有一个实例，
+	//即不管使用这个类创建多少个新对象，都会得到与第一次创建的对象完全相同。
+	function person(name) {
+		let obj;
+		this.name = name;
+		obj = this;
+		person = function () { //重写构造函数
+			return obj;
+		}
+	}
+	let jack = new person('jack');
+	let lili = new person('lili');
+	console.log(jack === lili);
+</script>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	外观模式(Facade Pattern) 是一种简单又常见的模式，
+	它为一些复杂的子系统接口提供一个更高级的统一接口，方便对这些子系统的接口访问。
+
+	它不仅简化类中的接口，还对接口和调用者进行解耦，
+	外观模式也常被认为是开发者必备，它可以将一些复杂操作封装起来，并创建一个简单接口用于调用。
+</body>
+
+</html>
+<script>
+	function func1() {
+		console.log('func1');
+	}
+
+	function func2() {
+		console.log('func2');
+	}
+	let obj = {
+		fun: () => {
+			func1();
+			func2();
+		}
+	}
+	obj.fun();
+</script>
