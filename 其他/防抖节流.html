@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	{
+		let fn = () => {
+			Function.prototype.deBounce = function (delay = 1000, leading) { // 节流
+				// time时间后才执行，time时间内如果再次点击则重新计时
+				let _this = this;
+				return (() => {
+					let timer = null,
+						args = [];
+					leading = leading || false;
+
+					function handleFn() {
+						// console.log(new Date());
+						args = arguments;
+
+						if (leading) {
+							handleFn.exe();
+							leading = false;
+							return
+						}
+
+						handleFn.cancle();
+
+						timer = setTimeout(() => {
+							_this.call(this, ...args);
+						}, delay)
+					}
+
+					handleFn.cancle = function () {
+						if (timer) {
+							clearTimeout(timer);
+						}
+					}
+
+					handleFn.exe = function () {
+						handleFn.cancle();
+						_this.call(this, ...args);
+					}
+
+					return handleFn;
+				})()
+			}
+
+			function func(n) {
+				console.log(new Date(), n);
+			}
+			let _func = func.deBounce(1000, true);
+			_func(11);
+			// _fn.cancle();
+			// _fn.exe();
+			_func(12);
+			_func(13);
+		}
+		// fn();
+	}
+	// 节流
+	{
+		let fn = () => {
+			Function.prototype.throttle = function (time) {
+				const _this = this;
+				return (() => {
+					let last,
+						isFirst = true;
+					return function () {
+						if (isFirst) {
+							_this.call(this, ...arguments);
+							isFirst = false;
+							last = new Date().getTime();
+							return
+						}
+						let now = new Date().getTime();
+						if (now - last >= time) {
+							_this.call(this, ...arguments);
+						}
+					}
+				})()
+			}
+
+			function func(n) {
+				console.log(n);
+			}
+			let _func = func.throttle(1000);
+			_func(1);
+			_func(2);
+			setTimeout(() => {
+				_func(3);
+			}, 1000)
+		}
+		fn();
+	}
+</script>

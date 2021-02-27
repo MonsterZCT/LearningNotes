@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	// Array
+	// Array.of
+	console.log(Array.of(1, 2, 3));
+
+	// Array.from
+	let m = new Map().set(1, 2).set(3, 4);
+	console.log(m, Array.from(m), Array.from({
+		name: 'jack',
+		age: 10
+	}), Array.from('1234'));
+
+	console.log(Symbol.iterator);
+
+	// array.map(()=>{})
+	{
+		let array = [1, 2, 3, 4, 5, 6, 7]
+		console.log(array.map((x) => x + 5), array);
+
+		let reduce = array.reduce((previous, current) => {
+			console.log(previous, current);
+			return previous + current;
+		}, 100);
+		console.log(reduce);
+	}
+
+	// 6.2.6 复制和填充方法
+	//copyWithin()  fill()
+	{
+		let array = [1, 2, 3, 4, 5];
+
+		// fill 静默忽略超出数组边界、零长度及方向相反的索引范围
+		console.log(array.fill(2),
+			array.fill(3, 2, 4),
+			array);
+
+		// copyWithin 
+		console.log(array.copyWithin(3, 0, 2),
+			array.copyWithin(3, 0, 2),
+			array);
+	}
+
+	// Map
+	{
+		let map = new Map([
+			['name', 'jack'],
+			['age', 12]
+		]);
+		let map2 = new Map([
+			['name', 'jack', 'age', 12]
+		])
+		console.log(map, map2);
+	}
+
+	console.log([1][Symbol.iterator]);
+
+	// WeakMap
+	{
+		const User = (() => {
+			let wm = new WeakMap();
+			class User {
+				constructor(id) {
+					this.idProperty = Symbol('id');
+					this.setId(id);
+				}
+				setId(id) {
+					const privateMembers = wm.get(this) || {}
+					privateMembers[this.idProperty] = id;
+					wm.set(this, privateMembers)
+				}
+				getId(id) {
+					return wm.get(this)[this.idProperty]
+				}
+			}
+			return User;
+		})()
+		console.log(new User(123).getId(123),new User(123));
+	}
+</script>

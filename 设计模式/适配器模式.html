@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	适配器模式：将一个类（对象）的接口（方法或者属性）转换为另外一个接口，以满足用户需求，使类（对象）之间接口的不兼容问题通过适配器得以解决。
+</body>
+
+</html>
+<script>
+	//框架适配
+
+	//参数适配
+	function doSomeThing(obj) {
+		let _adapter = {
+			name: 'jack',
+			age: '14'
+		}
+		for (const key in _adapter) {
+			if (Object.hasOwnProperty.call(_adapter, key)) {
+				_adapter[key] = obj[key] || _adapter[key];
+			}
+		}
+		console.table(_adapter);
+	}
+	doSomeThing({
+		name: 'lili',
+		sex: 'gril'
+	});
+
+	//数据适配
+	let arr = ['jack', 14, 'boy'];
+
+	function personAdapter(arr) {
+		return {
+			name: arr[0],
+			age: arr[1],
+			sex: arr[2]
+		}
+	}
+	console.table(personAdapter(arr));
+
+	//服务器端数据适配
+	function ajaxAdapter(data) {
+		return [data['name'], data['age'], data['sex']]
+	}
+
+	function ajax(data) {
+		//获取数据
+		if (data) {
+			console.table(ajaxAdapter(data));
+		}
+	}
+	ajax({
+		name: 'jack',
+		age: '14',
+		sex: 'boy'
+	});
+</script>

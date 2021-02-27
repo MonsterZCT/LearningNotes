@@ -8,54 +8,51 @@
 </head>
 
 <body>
-
+	装饰者模式：在不改变原对象的基础上，通过对其进行包装拓展（添加属性或者方法）使原有对象可以满足用户更复杂需求。
 </body>
 
 </html>
 <script>
-	function Sale(price) {
-		this.price = price || 100;
-	}
-	Sale.prototype.getPrice = function () {
-		return this.price;
-	}
-	Sale.decorators = {};
-	Sale.decorators.country = {
-		getPrice: function () {
-			let price = this.uber.getPrice();
-			price += price * 5 / 100;
-			return price;
+	//简单的装饰者模式
+	function decorate(former, latest) {
+		return function fn() {
+			former();
+			latest();
 		}
 	}
-	Sale.decorators.privince = {
-		getPrice: function () {
-			let price = this.uber.getPrice();
-			price += price * 7 / 100;
-			return price;
-		}
+
+	function former() {
+		console.log('former');
 	}
-	Sale.decorators.money = {
-		getPrice: function () {
-			return "￥" + this.uber.getPrice().toFixed(2);
-		}
+
+	function latest() {
+		console.log('latest');
 	}
-	Sale.prototype.decorate = function (decorator) {
-		let F = function () {},
-			newObj, overrides = this.constructor.decorators[decorator];
-		F.prototype = this;
-		console.log(this);
-		newObj = new F();
-		newObj.uber = F.prototype;
-		for (let k in overrides) {
-			if (overrides.hasOwnProperty(k)) {
-				newObj[k] = overrides[k];
+
+	let fn = former;
+	fn = decorate(fn, latest);
+	fn();
+
+	//
+	class Person {
+		constructor(name) {
+			this.name = name;
+		}
+		decorator = {
+			person: this,
+			clothes(clothes) {
+				this.person.clothes = clothes;
+				console.log(clothes);
+			},
+			shoe(shoe) {
+				this.person.shoe = shoe;
+				console.log(shoe);
 			}
-		}
-		return newObj;
+		};
 	}
-	let sale = new Sale(100);
-	sale = sale.decorate('country');
-	sale = sale.decorate('privince');
-	sale = sale.decorate('money');
-	console.log(sale.getPrice());;
+
+	let jack = new Person('jack');
+	jack.decorator.clothes('大衣');
+	jack.decorator.shoe('361');
+	console.table(jack, jack.clothes, jack.shoe);
 </script>

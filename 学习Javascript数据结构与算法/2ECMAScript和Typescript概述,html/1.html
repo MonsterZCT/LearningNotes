@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<div style="color: red;">function</div>
+</body>
+
+</html>
+<script>
+	// 重复声明
+	{
+		var v = 'v';
+		var v = 'var';
+
+		let a = 'a';
+		// let a = 'b'; //1.html:56 Uncaught SyntaxError: Identifier 'a' has already been declared
+	}
+	// 
+	{
+		function fn() {
+			arguments[0] = '0'
+			console.log(arguments[0]);
+		}
+		// fn(1);
+	}
+	// 私有变量
+	{
+		let fn = () => {
+			let init = (() => {
+				class Animal {
+					constructor(name) {
+						this.name = name;
+						this.operation = {
+							getName: this.getName.bind(this),
+							setName: this.setName.bind(this)
+						};
+					}
+					getName() {
+						return this.name;
+					}
+					setName(value) {
+						this.name = value;
+						return this.operation;
+					}
+				}
+
+				function init() {
+					return new Animal(...Array.from(arguments)).operation;
+				}
+
+				return init;
+			})()
+			let cat = init('cat');
+			console.log(cat);
+			console.log(cat.getName());
+			console.log(cat.setName('dog').getName());
+		}
+		fn();
+	}
+	// 
+	{
+		let fn = () => {
+			function foo() {
+				var a = 'a';
+				this.$ = (() => {
+					return {
+						name: '$',
+						say() {
+							console.log('hello world');
+						}
+					}
+				})()
+			}
+			foo();
+			// console.log(a);
+			console.log($);
+			$.say();
+		}
+		fn();
+	}
+	// 覆盖undefined
+	{
+		let fn = () => {
+			let undefined = true; // !!
+			console.log(undefined);
+		}
+		fn();
+	}
+	// 作用域提升
+	{
+		let fn = () => {
+			// foo();  // Uncaught TypeError: foo is not a function
+			// bar(); // Uncaught ReferenceError: bar is not defined
+			var foo = function bar() {}
+		}
+		fn();
+	}
+	// 函数优先
+	{
+		let fn = () => {
+			foo();
+			var foo;
+
+			function foo() {
+				console.log('function foo');
+			}
+			foo = function () {
+				console.log('foo = function');
+			}
+			foo();
+			console.log(foo);
+		}
+		fn();
+	}
+	// 闭包
+	{
+		let fn = () => {
+			function foo() {
+				var a = 2,
+					c = 3;
+
+				function baz() {
+					console.log(a);
+				}
+				baz();
+				// bar(baz);
+			}
+
+			function bar(fn) {
+				fn();
+			}
+			foo();
+		}
+		fn();
+	}
+
+	function outer() {
+		var a = 'window'
+
+		function foo() {
+			console.log(a);
+		}
+		foo();
+	}
+	// outer();
+
+	// 循环和闭包
+	{
+		let fn = () => {
+			for (var i = 0; i < 3; i++) {
+				setTimeout((i) => {
+					console.log(i);
+				}, 0, i);
+			}
+		}
+		fn();
+	}
+</script>

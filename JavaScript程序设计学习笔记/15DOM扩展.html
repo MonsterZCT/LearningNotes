@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	// readyState compatMode
+	{
+		let fn = () => {
+			console.log(document.readyState, document.compatMode);
+			setTimeout(() => {
+				console.log(document.readyState);
+			}, 0);
+		}
+		fn();
+	}
+</script>

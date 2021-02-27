@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	var object = {
+		arrow: () => {
+			console.log(this);
+		},
+		func,
+		outer,
+		normal() {
+			(() => {
+				console.log(this);
+			})()
+		}
+	}
+	// 全局环境
+	console.log(this);
+
+	// 箭头函数
+	console.log('=============箭头函数================');
+	var arrow = () => {
+		console.log(this);
+	}
+	arrow();
+	arrow.call(object);
+	object.arrow();
+
+	// 普通函数内箭头函数
+	object.normal();
+	let normal = object.normal;
+	normal();
+
+	// 普通函数
+	console.log('============================');
+
+	function func() {
+		console.log(this);
+	}
+	func();
+	func.call(object);
+	object.func();
+
+	// 函数调用函数
+	console.log('============================');
+
+	function outer() {
+		console.log('--------------once--------------');
+		console.log(this);
+
+		function inner() {
+			console.log(this);
+		}
+		inner();
+		return inner;
+	}
+	outer();
+	object.outer();
+	object.outer()();
+
+	// 对象
+	var obj = {
+		a: 10,
+		c: this.a + 20
+	}
+	console.log(obj.c);
+
+	// 调用者 VS 独立调用
+	var foo = {
+		a: 10,
+		getA: function () {
+			return this.a;
+		}
+	}
+	console.log(foo.getA()); // foo调用
+
+	var A = foo.getA;
+	console.log(A()); // getA独立调用
+
+
+	// 测试题 01
+	{
+		console.log('======================');
+
+		function foo() {
+			console.log(this.a);
+		}
+
+		function active(fn) {
+			fn();
+		}
+		var a = 20;
+		var obj = {
+			a: 10,
+			getA: foo,
+			active
+		}
+		active(obj.getA); // 20
+		obj.active(obj.getA); // 20 
+	}
+	// 测试题 02
+	{
+		var n = 'window';
+		var object = {
+			n: 'object',
+			getN: function () {
+				return function () {
+					return this.n;
+				}
+			}
+		}
+		console.log(object.getN()()); // window
+	}
+
+	// call apply bind
+	{
+		console.log('============call apply bind===========');
+
+		function func() {
+			console.log(this);
+		}
+		let obj = {}
+		func();
+		func.call(obj);
+		func.apply(obj);
+		let funcopy = func.bind(obj);
+		funcopy();
+
+		let person = {
+			name: 'jack'
+		}
+		funcopy.call(person);
+	}
+</script>

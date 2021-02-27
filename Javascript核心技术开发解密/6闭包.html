@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	{
+		let fn = () => {
+			let name = 'window'
+			let p = {
+				name: 'perter',
+				getName() {
+					// let name = 'getName'
+					return function () {
+						console.log(this.name);
+						// console.log(name);
+					}
+				}
+			}
+			debugger
+			// p.getName()();
+			p.getName().call(p);
+		}
+		// fn();
+
+		let fn2 = () => {
+			let name = 'window'
+			let p = {
+				name: 'perter',
+				getName() {
+					// let name = 'getName'
+					let self = this;
+					return function () {
+						console.log(self.name);
+						// console.log(name);
+					}
+				}
+			}
+			debugger
+			// p.getName()();
+			p.getName().call(p);
+		}
+		// fn2();
+	}
+	// 闭包是指这样的作用域（ foo ），它包含了一个函数（ fnl ），
+	// 这个函数（ fnl ）可以调用被这个作用域所封闭的变量（a）、
+	// 函数或者闭包等内容 
+	//通常我们通过闭包所对应的函数来获得对闭包的访问
+	{
+		let fn = () => {
+			function foo() {
+				let a = 10;
+
+				function fn1() {
+					// console.log(a);
+					// 注意此处有无，只有foo内部有一个函数可以调用
+					//foo作用域封闭的变量等，即产生闭包
+				}
+
+				function fn2() {
+					let b = 20;
+					console.log(b);
+				}
+
+				fn2();
+			}
+			foo();
+		}
+		// fn();
+	}
+	// 循环、setTimeout与闭包
+	{
+		let fn = () => {
+			for (var i = 0; i < 5; i++) {
+				((i) => {
+					setTimeout(() => {
+						console.log(i);
+					}, 1000);
+				})(i)
+			}
+			for (var i = 0; i < 5; i++) {
+				setTimeout((function (i) {
+					return function timer() {
+						console.log(i);
+					}
+				})(i), 1000);
+			}
+		}
+		// fn();
+	}
+	// 单例模式与闭包
+	{
+		let fn = () => {
+			let per = (() => {
+				let instance = null,
+					name = 'perter',
+					age = 20;
+
+				//初始化方法
+				function initial() {
+					return {
+						getName: function () {
+							return name
+						},
+						getAge: function () {
+							return age
+						}
+					}
+				}
+
+				return {
+					getInstance: function () {
+						if (!instance) {
+							instance = initial();
+						}
+						return instance;
+					}
+				}
+			})();
+			let p1 = per.getInstance();
+			let p2 = per.getInstance();
+			console.log(p1 === p2);
+		}
+		fn();
+	}
+</script>

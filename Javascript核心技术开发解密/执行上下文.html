@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	var foo = 'jack'
+	var foo = 'lili'
+
+	function foo() {
+		console.log('foo');
+	}
+	console.log(foo);
+	// 变量遇到同名函数 会跳过而不是覆盖
+
+	function func() {}
+	var func = 'person'
+	console.log(func);
+
+	// this
+	{
+		// debugger
+		let fn = () => {
+			let obj = {
+				person() {
+					function say() {
+						console.log(this);
+					}
+					say();
+					return say
+				}
+			}
+			obj.person()();
+		}
+		fn();
+	}
+	// closure 闭包
+	{
+		let fn = () => {
+			function outer() {
+				let name = 'jack';
+
+				function inner() {
+					// debugger
+					return name;
+				}
+				return inner();
+			}
+			outer();
+		}
+		fn();
+	}
+</script>

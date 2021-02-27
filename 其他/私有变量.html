@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	// symbol
+	{
+		let fn = () => {
+			let Person = (() => {
+				const id = Symbol('id');
+				class Person {
+					constructor(name) {
+						this.name = name;
+						this[id] = 123;
+					}
+				}
+				return Person;
+			})()
+			let jack = new Person('jack');
+			console.log(jack);
+			let id = Object.getOwnPropertySymbols(jack)[0];
+			console.log(id, jack[id]);
+		}
+		// fn();
+	}
+	// weakmap
+	{
+		let fn = () => {
+			let Person = (() => {
+				const map = new WeakMap();
+				class Person {
+					constructor(name) {
+						this.name = name;
+						map.set(this, 123);
+					}
+				}
+				return Person;
+			})()
+			let jack = new Person('jack');
+			console.log(jack);
+			let id = Object.getOwnPropertySymbols(jack)[0];
+			console.log(id, jack[id]);
+		}
+		// fn();
+	}
+	// 
+	{
+		let fn = () => {
+			let Person = (() => {
+				class Person {
+					constructor(name) {
+						this.name = name;
+					}
+					setName() {
+						this.name = name;
+					}
+					getName() {
+						return this.name;
+					}
+				}
+				return function () {
+					let person = new Person(...arguments);
+					return {
+						setName: person.setName.bind(person),
+						getName: person.getName.bind(person)
+					};
+				}
+			})()
+			let person = new Person('jack');
+			console.log(person.getName());
+		}
+		fn();
+	}
+</script>

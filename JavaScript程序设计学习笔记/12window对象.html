@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	console.log(this);
+	console.log(this.screenLeft);
+	this.moveTo(100, 100);
+	this.moveBy(100, 100);
+	console.log(this.moveTo(100, 100));
+
+	// window.open('http://www.baidu.com')
+	// window.open('http://127.0.0.1:3000/12window%E5%AF%B9%E8%B1%A1.html')
+
+	console.log(window.location);
+	// location.reload(true);
+
+	// navigator
+	{
+		let fn = () => {
+			console.log(navigator);
+			console.log(navigator.language, navigator.product,
+				navigator.platform, navigator.plugins);
+
+			let a = undefined || null
+			console.log(a);
+		}
+		fn();
+	}
+</script>

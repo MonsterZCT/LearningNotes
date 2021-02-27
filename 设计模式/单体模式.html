@@ -26,4 +26,29 @@
 	let jack = new person('jack');
 	let lili = new person('lili');
 	console.log(jack === lili);
+
+
+	//设置私有变量，外部无法修改
+	let Conf = function () {
+		let name = 'jack';
+		return {
+			get() {
+				return name;
+			}
+		}
+	}
+	console.log(this.name);
+	let conf = new Conf();
+	console.log(conf.get());
+
+	let obj = {
+		name: 'jack',
+		sex: null
+	}
+	console.log(obj.sex ? 'lili' : 'alibaba');
+
+	function Single(params) {
+		return 'doing'
+	}
+	console.log(Single());
 </script>

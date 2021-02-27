@@ -10,13 +10,29 @@
 <body>
 	代理模式(Proxy Pattern) 为其他对象提供一种代理，
 	来控制这个对象的访问，代理是在客户端和真实对象之间的介质。
+	（常见如跨域代理）
 </body>
 
 </html>
 <script>
-	let brother = {
-		buy:function(lunch){
-			
+	function Person(name) {
+		this.name = name;
+		this.want = function (lunch) {
+			this.lunch = lunch;
+		}
+		this.getLunch = function (lunch) {
+			console.log(this.name + ' get lunch');
 		}
 	}
+
+	function Proxy() {
+		this.buylunch = function (person) {
+			person.getLunch(person.lunch);
+		}
+	}
+
+	let jack = new Person('jack');
+	let proxy = new Proxy();
+	jack.want('花甲粉');
+	proxy.buylunch(jack);
 </script>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	// https://www.cnblogs.com/AlbertP/p/10847627.html
+	let array = [3, 1, 36, 18, 6, 0, 5, 2, 45, 19, 24, 7]
+	// 交换方法
+	Array.prototype.Swap = function (a, b) {
+		let array = this;
+		let temp = array[a];
+		array[a] = array[b];
+		array[b] = temp;
+		return this;
+	}
+
+	function compare(a, b) {
+		return a > b ? true : false;
+	}
+
+	// 冒泡排序  O(n^2)
+	Array.prototype.BubbleSort = function () {
+		let array = this;
+		for (let i = 0; i < array.length; i++) {
+			for (let j = 0; j < array.length - i - 1; j++) {
+				if (compare(array[j], array[j + 1])) {
+					array.Swap(j, j + 1);
+				}
+			}
+		}
+		return this;
+	}
+
+	// console.log(array.BubbleSort());
+
+	// 选择排序  O(n^2) 
+	Array.prototype.SelectionSort = function () {
+		let array = this;
+		let minIndex;
+		for (let i = 0; i < array.length; i++) {
+			minIndex = i;
+			for (let j = i + 1; j < array.length; j++) {
+				compare(array[minIndex], array[j]) && (minIndex = j);
+			}
+			minIndex !== i && array.Swap(minIndex, i);
+		}
+		return this;
+	}
+	// console.log(array.SelectionSort());
+
+	// 插入排序
+	Array.prototype.InsertionSort = function () {
+		let array = this;
+		let perIndex, current;
+		for (let i = 0; i < array.length; i++) {
+			perIndex = i - 1;
+			current = array[i];
+			while (perIndex >= 0 && compare(array[perIndex], current)) {
+				array[perIndex + 1] = array[perIndex];
+				perIndex--;
+			}
+			array[perIndex + 1] = current;
+		}
+		return this;
+	}
+	// console.log(array.InsertionSort());
+
+	//归并排序 O(nlog(n))
+	Array.prototype.MergeSort = function () {
+		let array = this;
+		if (array.length > 1) {
+			const length = array.length;
+			const middle = Math.floor(length / 2);
+			const left = array.slice(0, middle).MergeSort();
+			const right = array.slice(middle, length).MergeSort();
+
+			let i = 0,
+				j = 0;
+			const result = [];
+			while (i < left.length && j < right.length) {
+				result.push(compare(left[i], right[j]) ? right[j++] : left[i++]);
+			}
+			return result.concat(i < left.length ? left.slice(i) : right.slice(j));
+		}
+		return this;
+	}
+
+	// console.log(array.MergeSort());
+
+	// 快排
+	Array.prototype.QuickSort = function (left = 0, right) {
+		(right === undefined) && (right = this.length - 1);
+		let array = this;
+		if (array.length > 1) {
+			const pivot = array[Math.floor((right + left) / 2)];
+			let i = left,
+				j = right;
+			while (i <= j) {
+				while (compare(pivot, array[i])) {
+					i++;
+				}
+				while (compare(array[j], pivot)) {
+					j--;
+				}
+				if (i <= j) {
+					array.Swap(i, j);
+					i++;
+					j--;
+				}
+			}
+			if (left < i - 1) {
+				array.QuickSort(left, i - 1);
+			}
+			if (i < right) {
+				array.QuickSort(i, right);
+			}
+		}
+		return array;
+	}
+	// console.log(array.QuickSort());
+
+	// 计数排序 整数排序算法 O(n+k) k是临时计数数组的大小
+	Array.prototype.CountingSort = function () {
+		let array = this;
+		if (array.length < 2) {
+			return array;
+		}
+		let maxValue = array.reduce((pre, cur) => {
+			return pre > cur ? pre : cur;
+		}, array[0]);
+		const counts = new Array(maxValue + 1);
+		array.forEach((value) => {
+			if (!counts[value]) {
+				counts[value] = 0;
+			}
+			counts[value]++;
+		})
+
+		let sortedIndex = 0;
+		counts.forEach((value, index) => {
+			while (value > 0) {
+				array[sortedIndex++] = index;
+			}
+		})
+		return array;
+	}
+	// console.log(array.countingSort());
+
+	// 桶排序
+	Array.prototype.BucketSort = function (bucketSize = 5) {
+		let array = this;
+		if (array.length < 2) {
+			return array;
+		}
+
+		let minValue = array[0],
+			maxValue = array[0];
+		array.forEach((value, index) => {
+			if (array[index] < minValue) {
+				minValue = array[index];
+			} else if (array[index] > maxValue) {
+				maxValue = array[index];
+			}
+		})
+		const bucketCount = Math.floor((maxValue - minValue) / bucketSize) + 1;
+		const buckets = new Array(bucketCount);
+		buckets.fill([]);
+		array.forEach((value, index) => {
+			const bucketIndex = Math.floor((array[index] - minValue) / bucketSize);
+			buckets[bucketIndex].push(array[index]);
+		})
+
+		const sortedArray = [];
+		buckets.forEach((value, index) => {
+			if (buckets[index] !== null) {
+				sortedArray.push(...buckets[index].InsertionSort())
+			}
+		})
+		return array;
+	}
+	console.log(array.BucketSort());
+</script>

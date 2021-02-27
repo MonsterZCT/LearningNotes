@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	let fn=()=>{}
+	fn();
+</body>
+
+</html>
+<script>
+	// class 
+	{
+		let fn = () => {
+			class Animal {
+				constructor(name, type) {
+					this.name = name;
+					this.type = type;
+				}
+				say(word) {
+					console.log(word);
+				}
+			}
+			class Cat extends Animal {
+				constructor(name) {
+					super(name, 'cat');
+				}
+			}
+			let cat = new Cat('jack');
+			console.log(cat);
+			cat.say('hello world');
+		}
+		// fn();
+	}
+	// Object.create()
+	{
+		let fn = () => {
+			let object = {
+				name: 'jack',
+				say() {
+					console.log(this.name);
+				}
+			}
+			let lili = Object.create(object);
+			console.log(lili, lili.name);
+		}
+		fn();
+	}
+	// new
+	{
+		let fn = () => {
+			function Foo() {}
+			let a = new Foo();
+			Foo.prototype.constructor = function Bar() {};
+			console.log(a, a.constructor, a.constructor.name);
+		}
+		fn();
+	}
+	// class
+	{
+		let person = {}
+		class A {
+			constructor() {}
+			array = [1, 2, 3];
+			object = {};
+			person = person
+		}
+		class B extends A {
+			constructor() {
+				super();
+			}
+		}
+		let a = new A(),
+			c = new A(),
+			b = new B();
+		console.log(a, b, a.array === b.array,
+			a.array === c.array, a.object === c.object,
+			a.person === c.person);
+
+		Object.prototype.clone = function () {
+			let self = this;
+			class clone {
+				constructor() {}
+				clone=self;
+			}
+			return new clone();
+		}
+		let object = {
+			name: 'jack',
+			array: [1, 2, 3, [4, 5]],
+			say() {
+				console.log(this.name);
+			},
+			friends: {
+				name: 'lili'
+			}
+		}
+		let clone = object.clone()
+		console.log(clone, clone === object);
+	}
+</script>

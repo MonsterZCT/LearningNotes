@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	// 未完
+	let string = 'abcadefgc'
+
+	function find(string) {
+
+	}
+	find(string);
+	let array = string.split('');
+	let max = [];
+	array.reduce((pre, cur) => {
+		let ex = pre.indexOf('cur')
+		if (ex !== -1) {
+			pre.push(cur);
+		} else {
+			let p = pre.slice(0, ex + 1),
+			q = pre.slice(ex)
+		}
+		return pre;
+	}, [])
+</script>

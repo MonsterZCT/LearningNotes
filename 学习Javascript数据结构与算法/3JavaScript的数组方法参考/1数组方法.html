@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	{
+		let fn = () => {
+			let array = [1, 2, 3, 4, 5];
+			let keys = array.keys();
+			console.log(keys.next().value);
+			let value = array.values();
+			console.log(value.next().value);
+			let entry = array.entries();
+			console.log(entry.next().value);
+
+			console.log('a'.localeCompare('j'));
+		}
+		fn();
+	}
+</script>

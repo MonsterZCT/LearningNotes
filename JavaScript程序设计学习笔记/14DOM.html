@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="first">
+		<div id="second">
+		</div>
+		<div id="third">
+		</div>
+		<div id="fourth"></div>
+	</div>
+</body>
+
+</html>
+<script>
+	{
+		let fn = () => {
+			console.log(document.childNodes);
+			console.log(document.childNodes[1].childNodes);
+			let html = document.childNodes[1].childNodes,
+				head = html[0],
+				text = html[1],
+				body = html[2]
+			console.log(head, text, body);
+			let first = body.childNodes[0].nextSibling;
+			console.log(first);
+			let second = first.childNodes[1];
+			let third = second.nextSibling.nextSibling;
+			console.log(second, third);
+			first.appendChild(third)
+			let copy = second.cloneNode(true);
+			first.appendChild(copy)
+
+			console.log(JSON.stringify(third), copy);
+		}
+		// fn();
+	}
+	// document 
+	{
+		let fn = () => {
+			console.log(document.documentElement, document.body);
+			console.log(document.URL, document.title, document.domain);
+			console.log(document.referrer);
+			console.log(document === window.document);
+		}
+		// fn();
+	}
+	// element
+	{
+		let fn = () => {
+			let first = document.getElementById('first');
+			console.log(first.attributes);
+		}
+		fn();
+	}
+</script>
+<style>
+	#first {
+		height: 500px;
+		background-color: rgb(238, 238, 224);
+	}
+
+	#second {
+		height: 100px;
+		background-color: yellow;
+	}
+
+	#third {
+		height: 100px;
+		background-color: red;
+	}
+
+	#fourth {
+		height: 100px;
+		background-color: rgb(58, 58, 48);
+	}
+</style>

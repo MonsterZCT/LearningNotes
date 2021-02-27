@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+<p id="dom"></p>
+
+</html>
+<script>
+	// 
+	{
+		let person = {
+			name: 'jack',
+			friends: [1, 2, 3],
+			animal: {
+				name: 'dog'
+			},
+			toJSON() {
+				return this.animal;
+			}
+		}
+		console.log(JSON.stringify(person, (key, value) => {
+			console.log(value);
+			if (/name/.test(key)) {
+				return 'name is ' + value
+			}
+			return value
+		}));
+		document.getElementById('dom').innerText = JSON.stringify(person, null, 2)
+	}
+</script>

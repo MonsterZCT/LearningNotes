@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	建造者模式，将一个复杂对象的构造层与其表示层相互分离，同样的构建过程可采用不同的表示。
+</body>
+
+</html>
+<script>
+	function Human() {}
+	Human.prototype.getName = function () {
+		return this.name;
+	}
+	Human.prototype.getJob = function () {
+		return this.job;
+	}
+
+	function Name(name) {
+		this.name = name;
+		console.log(this);
+	}
+
+	function Job(job) {
+		this.job = job;
+		console.log(this);
+	}
+
+	function Person(name, job) {
+		let _person = new Human();
+		Name.call(_person, name);
+		Job.call(_person, job);
+		return _person;
+	}
+
+	let jack = new Person('jack', 'teacher');
+	console.log(jack);
+	console.log(jack.getName(), jack.getJob());
+</script>

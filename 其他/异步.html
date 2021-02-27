@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	// try
+	{
+		// https://blog.csdn.net/xiaoluodecai/article/details/107297404
+		// try-catch 不能捕获异步异常
+		let fn = () => {
+			try {
+				throw new Error('error')
+			} catch (error) {
+				console.log(error);
+			}
+
+			try {
+				setTimeout(() => {
+					throw new Error('error')
+				}, 0);
+			} catch (error) {
+				console.log(error);
+			}
+
+			window.onerror = function () {
+				console.log('window error');
+				console.log(...arguments)
+			}
+		}
+		// fn();
+	}
+	// 
+	{
+		let fn = () => {
+			console.log(new Date());
+			setTimeout(() => {
+				console.log(new Date());
+			}, 2000);
+
+			setTimeout(() => {
+				console.log(new Date());
+			}, 7000);
+
+			setTimeout(() => {
+				console.log(new Date());
+			}, 8000);
+
+			for (let i = 0; i < Math.pow(2, 32); i++) {}
+			console.log(new Date());
+		}
+		// fn();
+	}
+	// async
+	{
+		async function asy() {
+			console.log(asy2());
+			return await asy2() - 1;
+			
+		}
+
+		async function asy2() {
+			return 2;
+		}
+		let res = asy();
+		console.log(res);
+		res.then((args) => {
+			console.log(args);
+		})
+	}
+</script>

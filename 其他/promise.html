@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	// 
+	{
+		let fn = () => {
+			// 未实现
+			let MyPromise = (() => {
+				let sym = Symbol('params')
+				class MyPromise {
+					status = 'pending';
+					[sym] = [];
+					constructor(func) {
+						let that = this;
+
+						function resolve() {
+							that.status = 'fulfilled';
+							that[sym] = Array.from(arguments);
+						}
+
+						function reject() {
+							that.status = 'rejected';
+							that[sym] = Array.from(arguments);
+						}
+						if (func instanceof Function) {
+							func(resolve, reject);
+						} else {
+							throw new Error('请传入函数')
+						}
+					}
+
+					then(callback) {
+						let that = this;
+						if (callback instanceof Function) {
+							if (this.status === 'fulfilled') {
+								setTimeout(() => {
+									try {
+										callback(...that[sym]);
+									} catch (error) {
+										that.status = 'rejected';
+										that[sym] = [error];
+									}
+								}, 0);
+							}
+						}
+						return this;
+					}
+					catch (callback) {
+						let that = this;
+						setTimeout(() => {
+							if (this.status === 'rejected') {
+								callback(...that[sym]);
+							}
+						}, 0);
+						return this;
+					}
+					//
+					finally(callback) {
+						if (callback instanceof Function) {
+							setTimeout(() => {
+								callback();
+							}, 0);
+						}
+						return this;
+					}
+				}
+				return MyPromise;
+			})()
+
+
+			let name = 'jack';
+			let mypromise = new MyPromise((resolve, reject) => {
+				console.log('name');
+				resolve('name is ' + name);
+			}).then((name) => {
+				console.log('then');
+				console.log(name);
+				throw new Error('error')
+			}).catch((e) => {
+				console.log('catch', e);
+			}).finally(() => {
+				// console.log('finally');
+			});
+
+			console.log(mypromise, mypromise[Symbol('params')]);
+
+			console.log('111111');
+
+			let mypromise2 = new MyPromise(() => {
+
+			})
+			console.log('+++++++');
+		}
+		// fn();
+	}
+	//
+	{
+		let fn = () => {
+			let p = new Promise((resolve, reject) => {
+					resolve(10);
+				})
+				.then((value) => {
+					console.log(value);
+					return value + 1
+				})
+				.then((value) => {
+					console.log(value);
+
+					return new Error('error')
+				})
+				.then((value) => {
+					console.log(value);
+				})
+				.catch(() => {
+					console.log('error1');
+				})
+				.catch(() => {
+					console.log('error2');
+				})
+		}
+		// fn();
+	}
+	// 
+	{
+		let fn = () => {
+			class _Promise {
+				status = 'pending';
+				value = null;
+				error = null;
+				onFulfilled = null;
+				onRejected = null;
+				next = null;
+
+				constructor(executor) {
+					try {
+						executor(this.resolve.bind(this), this.reject.bind(this));
+					} catch (error) {
+						this.reject.bind(this);
+					}
+				}
+
+				resolve(value) {
+					if (this.status !== 'pending') {
+						return
+					}
+					this.status = 'fulfilled';
+					let timer = setInterval(() => {
+						if (!!this.onFulfilled) {
+							clearInterval(timer);
+							this.value = value;
+							this.next.resolve(this.onFulfilled(value))
+						}
+					}, 0)
+				}
+
+				reject(error) {
+					if (this.status !== 'pending') {
+						return
+					}
+					this.status = 'rejected';
+					let timer = setInterval(() => {
+						if (!!this.onFulfilled) {
+							clearInterval(timer);
+							this.error = error;
+							this.next.resolve(this.onRejected(error))
+						}
+					}, 0);
+				}
+
+				then(onFulfilled, onRejected) {
+					this.onFulfilled = onFulfilled;
+					this.onRejected = onRejected;
+					return this.next = new _Promise(() => {});
+				}
+			}
+			let promise = new _Promise((resolve, reject) => {
+				resolve('resolve');
+				// reject('reject');
+			})
+			let promise2 = promise.then((res) => {
+				console.log(res);
+				return 1;
+			}, (err) => {
+				console.log(err);
+			})
+
+			promise2.then((res) => {
+				console.log(res);
+				return 2
+			}).then((res) => {
+				console.log(res);
+			})
+
+			// let p = new Promise((resolve, reject) => {
+			// 	resolve(1);
+			// })
+			// console.log(p);
+			// let q = p.then((res) => {
+			// 	console.log(res);
+			// 	return 2
+			// })
+			// console.log(q);
+			// p.then((res) => {
+			// 	console.log(res);
+			// })
+		}
+		// fn();
+	}
+	
+</script>

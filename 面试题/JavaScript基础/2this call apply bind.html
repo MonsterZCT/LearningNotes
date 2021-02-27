@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	function foo(name) {
+		console.log(this);
+		this.a = name;
+	}
+	let object = {}
+
+	let foo1 = foo.bind(object);
+	// console.log(foo1('foo'), object);
+
+	// let foo2 = foo.call(object);
+	// console.log(object);
+
+	// let obj = new foo1('obj');
+	// console.log(obj);
+
+	let foo2 = foo.bind(undefined); // null
+	foo2();
+	console.log(foo2);
+	let obj2 = {
+		foo2
+	}
+	obj2.foo2();
+
+	{
+		function Person(sex, age) {
+			this.sex = sex;
+			this.age = age;
+			console.log(this);
+		}
+		let fn = () => {
+			console.log('=================================');
+			Function.prototype._bind = function (oThis) {
+				if (typeof this !== 'function') {
+					throw new TypeError('type error');
+				}
+				let args = Array.from(arguments).slice(1),
+					fToBind = this,
+					PersonOP = function () {},
+					fBound = function () {
+						return fToBind.apply(this instanceof fToBind ? this : oThis,
+							args.concat(Array.from(arguments)));
+					}
+				// PersonOP.prototype = this.prototype; // 为new作准备，链接prototype
+				fBound.prototype = this.prototype; // 为new作准备
+				return fBound;
+			}
+
+			let fB = Person._bind({
+				name: 'ming'
+			});
+			fB('gril', 11);
+
+			let ming = new fB('boy', 13);
+
+			let fB2 = Person._bind(ming);
+			new fB2('jack', 11)
+		}
+		fn();
+	}
+</script>

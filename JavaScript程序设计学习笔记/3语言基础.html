@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="tag"></div>
+</body>
+
+</html>
+<script>
+	//
+	{
+		let fn = () => {
+			//typeof
+			console.log(typeof []);
+			let func = () => {}
+			let fun = function () {}
+			console.log(typeof func);
+			console.log(typeof fun);
+			console.log(typeof /abc/);
+
+			//string
+			console.log('"\"');
+
+			//toString
+			let obj = {}
+			console.log(obj.toString());
+
+			//symbol
+			let sym = Symbol('symbol');
+			console.log(sym);
+			console.log(typeof sym);
+
+			function symbol() {
+				let s = Symbol('name');
+				console.log('');
+				return {
+					[s]: 'jack'
+				}
+			}
+			let person = new symbol();
+			let name = Object.getOwnPropertySymbols(person)[0];
+			console.log(Object.getOwnPropertySymbols(person));
+			console.log(person[name]);
+
+			//--运算符
+			let num = '10',
+				str = 'str';
+			--num;
+			--str;
+			console.log(num, str);
+
+			// ** 指数操作符
+			console.log(3 ** 2);
+
+			// 关系操作符
+			console.log('3' >= 2);
+			console.log('2' >= 3);
+			console.log('x' >= 4);
+
+			//number()
+			console.log(Number('x'));
+		}
+		// fn();
+	}
+
+	// 
+	{
+		let fn = () => {
+			name = 'jack';
+			var name;
+			console.log(name, this.name);
+
+			age = 20;
+			console.log(age, this.age);
+		}
+		// fn();
+	}
+	// 模板自变量
+	{
+		let fn = () => {
+			let a = 'jack',
+				b = `start   <a></a>   end`;
+
+			function add() {
+				let args = Array.from(arguments);
+				return args.reduce((pre, cur) => pre + cur, '')
+			}
+
+			console.log(`${a}---\${a}`);
+			console.log(b);
+			console.log(`${add(a,b)}`);
+			document.getElementById('tag').innerText = b;
+
+			// String.raw``
+			console.log(`\n`, String.raw `\n`);
+		}
+		fn();
+	}
+
+	// symbol
+	{
+		let fn = () => {
+			// Symbor.for()  检查全局，如不存在同名则生成，如已存在则返回该符合实例
+			let fooGlobalSymbol = Symbol.for('foo');
+			let otherFooGlobalSymbo = Symbol.for('foo');
+			let another = Symbol('foo');
+			let object = {
+				[fooGlobalSymbol]: 'jack',
+				[another]: 'lili',
+				name: 'jack',
+				age: 29
+			}
+
+			console.log(fooGlobalSymbol, typeof fooGlobalSymbol,
+				otherFooGlobalSymbo, another);
+			console.log(fooGlobalSymbol === another);
+			console.log(object[fooGlobalSymbol], object[another],
+				object[fooGlobalSymbol] === object[another]);
+
+			console.log(Object.getOwnPropertySymbols(object));
+			console.log(Object.getOwnPropertyNames(object));
+			console.log(Object.getOwnPropertyDescriptors(object));
+			console.log(Reflect.ownKeys(object));
+
+			let keys = Reflect.ownKeys(object);
+			console.log(object[keys[3]]);
+
+			let a = 'a';
+			let symbolA = Symbol(`${a}`);
+			console.log(symbolA);
+
+			let sym1 = Symbol('name');
+			let sym2 = Symbol('age');
+			let object2 = {
+				[sym1]: 'jack',
+				[sym2]: 20,
+				sex: 'boy'
+			}
+			Object.defineProperty(object2, sym1, {
+				enumerable: false
+			})
+			Object.defineProperty(object2, 'sex', {
+				enumerable: false,
+				configurable: false
+			})
+			console.log(Object.getOwnPropertyDescriptors(object2));
+			console.log(Reflect.ownKeys(object2));
+			console.log(object2[Reflect.ownKeys(object2)[2]]);
+		}
+		fn();
+	}
+</script>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<form id="form" class="" report-submit="false" bindsubmit="" bindreset="">
+		<input type="text">
+		<input type="button" value="reset" id="reset">
+		<input type="reset">
+		<textarea rows="5" cols="20" id="textarea"></textarea>
+	</form>
+</body>
+
+</html>
+<script>
+	const doc = document,
+		form = doc.getElementById('form'),
+		reset = doc.getElementById('reset'),
+		textarea = doc.getElementById('textarea')
+
+	reset.addEventListener('click', (e) => {})
+	form.addEventListener('reset', () => {
+		console.log('reset');
+	})
+	textarea.addEventListener('blur', () => {
+		textarea.select();
+	})
+</script>

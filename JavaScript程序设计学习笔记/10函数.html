@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<div>111</div>
+	<div>222</div>
+	<div>333</div>
+</body>
+
+</html>
+<script>
+	{
+		(() => {
+			let dog = {
+				years: 1,
+				get age() {
+					return this.years
+				},
+				set age(newAge) {
+					this.years = newAge;
+				}
+			}
+			console.log(dog);
+			let x = 'jack';
+
+			function say() {
+				console.log(arguments);
+				arguments[0] = 'lili'
+				console.log(arguments);
+			}
+			say(x);
+			let arrow = (x) => {
+				// console.log(arguments);
+			}
+			arrow(x);
+		})()
+	}
+	// caller
+	{
+		(() => {
+			function say() {
+				console.log(arguments.callee.caller, arguments.callee);
+			}
+
+			function person() {
+				say();
+			}
+			let obj = {
+				say
+			}
+			obj.say();
+			person();
+		})()
+	}
+	// new.target
+	{
+		(() => {
+			console.log('=======================');
+			class Person {
+				constructor(name) {
+					console.log(new.target);
+				}
+			}
+			console.log(new Person('jack'), Person.prototype);
+
+			function Animals(name) {
+				console.log(new.target);
+			}
+			console.log(new Animals('dog'));
+		})()
+	}
+	// 
+	{
+		(() => {
+			console.log('=======================');
+			let s = (function say() {
+				console.log('say');
+			})
+			let x = (function say() {
+				console.log('xxx');
+			})
+			console.log(s(), s, x);
+			// console.log(say);
+		})()
+	}
+	// this
+	{
+		console.log('==========this===========');
+		(() => {
+			console.log(this);
+			this.color = 'red';
+			let obj = {
+				color: 'blue',
+				getColor() {
+					// console.log(this);
+					return function () {
+						// console.log(this);
+						return this.color
+					}
+				},
+				getArrow() {
+					// console.log(this);
+					return () => {
+						// console.log(this);
+						return this.color
+					}
+				},
+				getName() {
+					// console.log(this);
+					return function name() {
+						// console.log(this);
+						return this.color
+					}
+				},
+				color() {
+					return this.color;
+				}
+			}
+			let color = obj.color();
+			console.log(color);
+			console.log(obj.getColor()(), obj.getArrow()()(),
+				obj.getName()(), obj.color()());
+			console.log((obj.color())(), (obj.color = obj.color)());
+		})()
+		// let arrow = () => {
+		// 	console.log('arrow');
+		// }
+		// let name = function () {
+		// 	console.log('name');
+		// }
+		// arrow();
+		// name();
+
+		// let arrow = function () {
+		// 	return function () {
+		// 		console.log('arrow');
+		// 	}
+		// }
+		// let name = function () {
+		// 	return function () {
+		// 		console.log('name');
+		// 	}
+		// }
+		// arrow()();
+		// name()();
+	}
+	// this more
+	{
+		let obj = {
+			getColor() {
+				return this;
+			}
+		}
+		let arrow = () => {
+			return obj.getColor();
+		}
+
+		function name() {
+			return obj.getColor();
+		}
+		let a = (() => {
+			return obj.getColor();
+		})()
+		console.log(obj.getColor(), arrow(), name());
+		console.log(a);
+		console.log((obj.getColor = obj.getColor)(), (obj.getColor)());
+	}
+	// IIFE
+	{
+		for (var i = 0; i < 3; i++) {
+			setTimeout(() => {
+				console.log(i);
+			}, 0);
+		}
+		for (let i = 0; i < 3; i++) {
+			setTimeout(() => {
+				console.log(i);
+			}, 0);
+		}
+	}
+	// 
+	{
+		let fn = () => {
+			return (() => {
+				return 'say'
+			})()
+		}
+		console.log(fn());
+
+		let fn3 = (() => {
+			return 'say'
+		})()
+		let fn2 = () => {
+			return fn3
+		}
+		console.log(fn2());
+	}
+</script>

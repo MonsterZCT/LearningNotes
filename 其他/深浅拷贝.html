@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	//
+	{
+		let fn = () => {
+
+		}
+		fn();
+	}
+	// Object.assign
+	{
+		let fn = () => {
+			let array = [1, [2, 3, [4, 5], 6, [7, 8]], 9]
+			let clone = Object.assign([], array);
+			console.log(clone === array, clone, clone[2] === array[2]);
+
+			let obj = {}
+			console.log(obj === Object.assign({}, obj));
+		}
+		// fn();
+	}
+
+
+	// 手动实现深拷贝 数组和对象
+	{
+		let fn = () => {
+			Object.prototype.deepClone = function () {
+				let target = (this instanceof Array) ? [] : {};
+				if (Array.isArray(target)) {
+					for (const i of this) {
+						target.push((typeof i === 'object') ? i.deepClone() : i)
+					}
+				} else {
+					for (const key in this) {
+						if (Object.hasOwnProperty.call(this, key)) {
+							target[key] = (typeof this[key] === 'object') ?
+								this[key].deepClone() : this[key];
+						}
+					}
+				}
+				return target;
+			}
+			let obj = {
+				name: 'jack',
+				animals: {
+					cat: 'lili',
+					dog: 'ming'
+				},
+				food: ['coco', 'judge']
+			}
+			console.log(obj.deepClone(), obj.deepClone() === obj);
+
+			let array = [1, [2, 3, [4, 5], obj, [7, 8]], 9];
+			console.log(array.deepClone() === array);
+			console.log(array.deepClone()[1][3], array.deepClone()[1][3] === obj);
+
+			function func() {}
+			let date = new Date();
+			console.log(typeof func, typeof date);
+			let funcCopy = func.deepClone();
+			console.log(funcCopy);
+		}
+		// fn();
+	}
+	// 手动实现深拷贝2
+	{
+		let fn = () => {
+			Object.prototype.deepClone = function () {
+				let target = new this.constructor();
+				if (Array.isArray(target)) { // 数组
+					for (const i of this) {
+						target.push((typeof i === 'object') ? i.deepClone() : i)
+					}
+				} else if (typeof this === 'function') { //函数
+					//两种实现方式皆可 不包含箭头函数
+					let fn = this.toString();
+					if (!fn.toString().split('()')[0].includes('function')) {
+						fn = 'function ' + fn;
+					}
+					return new Function('return ' + fn)();
+					// return this.bind({});
+				} else {
+					for (const key in this) {
+						if (Object.hasOwnProperty.call(this, key)) {
+							target[key] = (typeof this[key] === 'object' ||
+									typeof this[key] === 'function') ?
+								this[key].deepClone() : this[key];
+						}
+					}
+				}
+				return target;
+			}
+			let obj = {
+				name: 'jack',
+				animals: {
+					cat: 'lili',
+					dog: 'ming'
+				},
+				food: ['coco', 'judge'],
+				say: function () {
+					console.log('I am ' + this.name + ';');
+				},
+				say2() {
+					console.log('I am ' + this.name + ';');
+				},
+				say3: () => {
+					console.log(this.name);
+				}
+			}
+			console.log(obj.deepClone(), obj.deepClone() === obj);
+
+			let array = [1, [2, 3, [4, 5], obj, [7, 8]], 9];
+			console.log(array.deepClone() === array);
+			console.log(array.deepClone()[1][3], array.deepClone()[1][3] === obj);
+
+			obj.deepClone().say();
+
+			let reg = new RegExp(/abc/);
+			console.log(reg.deepClone() === reg);
+			console.log(reg.test('abc'), reg.deepClone().test('abc'));
+
+			let fn = function () {
+				console.log('fn');
+				console.log(this);
+			}
+			console.log(fn.deepClone());
+			fn.deepClone().call(obj);
+
+
+			// let say = obj.say2;
+			// if (!say.toString().split('()')[0].includes('function')) {
+			// 	say = 'function ' + say;
+			// }
+			// console.log('return ' + say.toString());
+			// let str = 'return ' + say.toString();
+			// let clone = new Function(str)();
+			// console.log(clone);
+		}
+		// fn();
+	}
+	// 3
+	{
+		let fn = () => {
+			let obj = {
+				name: 'jack',
+				animals: {
+					cat: 'lili',
+					dog: 'ming'
+				},
+				reg: new RegExp(/abc/),
+				food: ['coco', 'judge'],
+				say: function () {
+					console.log('I am ' + this.name + ';');
+				},
+				say2() {
+					console.log('I am ' + this.name + ';');
+				},
+				say3: () => {
+					console.log(this.name);
+				}
+			}
+			Object.prototype.deepClone = function () {
+				let target = new this.constructor();
+				console.log(typeof this);
+				if (typeof this === 'function') {
+					let fn = this.toString();
+					if (!fn.split('{')[0].includes('>') && !fn.split('{')[0].includes('function')) {
+						fn = 'function ' + fn;
+					}
+					target = new Function('return ' + fn)();
+				}
+				for (const key in this) {
+					if (Object.hasOwnProperty.call(this, key)) {
+						(typeof this[key] === 'object' || typeof this[key] === 'function') ?
+						(target[key] = this[key].deepClone()) : (target[key] = this[key]);
+					}
+				}
+				return target;
+			}
+			let clone = obj.deepClone();
+			console.log(clone);
+			console.log(clone === obj, clone.say === obj.say, clone.say3 === obj.say3);
+			clone.say();
+			clone.say2();
+			clone.say3();
+			obj.say3();
+			console.log(clone.reg.test(''));
+		}
+		fn();
+	}
+	// 箭头函数
+	{
+		let fn = () => {
+			let arrow = () => {
+				console.log('arrow');
+			}
+			Function.prototype.deepClone = function () {
+				let fn = this.toString();
+				console.log(fn, this.constructor);
+				if (!fn.split('{')[0].includes('>') && !fn.split('{')[0].includes('function')) {
+					fn = 'function ' + fn;
+				}
+				return new Function('return ' + fn)();
+			}
+			let clone = arrow.deepClone();
+			console.log(clone, clone === arrow);
+		}
+
+		// fn();
+	}
+</script>

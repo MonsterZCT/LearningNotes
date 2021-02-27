@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	{
+		let fn = () => {
+			class A {
+				then() {
+					console.log('then');
+					return 3
+				}
+			}
+			console.log('1');
+			let a = new A();
+			console.log(a.then());;
+			console.log('2');
+		}
+		// fn();
+	}
+	// 
+	{
+		let fn = async () => {
+			let a = new Promise((resolve) => {
+				console.log('a');
+				resolve(1)
+			});
+			let b = new Promise((resolve) => {
+				console.log('b');
+				resolve(2)
+			});
+			await a;
+			await b;
+			console.log(a.then((x) => {
+				console.log(x);
+			}));
+			console.log(b.then((x) => {
+				console.log(x);
+			}));
+		}
+		// fn();
+	}
+	// 
+	{
+		let fn = () => {
+			function addTwo(x) {
+				return x + 2;
+			}
+
+			function addThree(x) {
+				return x + 3;
+			}
+
+			console.log(Promise.resolve(1).then(addTwo));
+
+			console.log(new Promise((resolve, reject) => {
+				resolve(1)
+			}).then(() => {
+				return 3
+			}));
+		}
+		fn();
+	}
+</script>

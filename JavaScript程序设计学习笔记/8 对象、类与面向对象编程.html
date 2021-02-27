@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	{
+		// Object.is()
+		let a = {},
+			b = {},
+			c = a;
+		console.log(Object.is(a, b), Object.is(a, c));
+	} 
+	{
+		// 可计算属性
+		function createName() {
+			return 'name';
+		}
+		let person = {
+			[createName()]: 'jack'
+		}
+		console.log(person);
+	}
+</script>

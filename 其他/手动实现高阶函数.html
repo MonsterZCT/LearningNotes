@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	// map
+	{
+		let fn = () => {
+			let array = [1, 2, 3, 4, 5]
+			// map 
+			// array.map(callback(value,index),array)
+			Array.prototype._map = function (callback, array) {
+				let _array = [];
+				if (typeof callback !== 'function') {
+					throw new Error('callback should be a function!')
+				}
+
+				for (let i = 0; i < this.length; i++) {
+					_array.push(callback.call(this, this[i], i, this));
+				}
+				return _array;
+			}
+
+			let _array = array._map((value, index) => {
+				console.log(value, index);
+				return value + 2;
+			})
+			console.log(_array);
+
+			// not function
+			// array._map();
+		}
+		fn();
+	}
+</script>

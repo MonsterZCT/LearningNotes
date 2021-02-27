@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	class Dep { // 依赖收集
+		constructor() {
+			this.subs = [];
+		}
+		addSub(sub) {
+			this.subs.push(sub);
+		}
+		remove(sub) {
+			// remove(this.subs, sub);
+			if (this.subs.length) {
+				const index = this.subs.indexOf(sub);
+				if (index > -1) {
+					return this.subs.splice(index, 1);
+				}
+			}
+		}
+		depend() {
+			if (window.target) {
+				this.addSub(window.target);
+			}
+		}
+		notify() {
+			const subs = this.subs.slice();
+			for (let i = 0; i < subs.length; i++) {
+				subs[i].update();
+			}
+		}
+	}
+
+	function createPrototype() {
+		let methods = ['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse'];
+		let arrayPrototype = Object.create(Array.prototype);
+
+		methods.forEach((method) => {
+			Object.defineProperty(arrayPrototype, method, {
+				value: function () {
+					Array.prototype[method].apply(this, arguments)
+				}
+			})
+		})
+
+		return arrayPrototype;
+	}
+
+	let arrayPrototype = createPrototype();
+
+	class Observer {
+		constructor(value) {
+			this.value = value;
+			this.dep = new Dep();
+			def(value, '__ob__', this)
+			if (Array.isArray(value)) {
+				value.__proto__ = arrayPrototype;
+			}
+		}
+	}
+
+	let array = [1, 2, 3];
+
+	let ob = new Observer(array);
+
+	array.push(4);
+	console.log(array);
+	console.log(ob);
+
+
+	class Watcher {
+		constructor(getter) {
+			this.getter = getter;
+		}
+		get() {
+			return this.getter;
+		}
+		update() {
+			console.log('update');
+		}
+	}
+
+	function def(obj, key, val, enumerable) {
+		Object.defineProperty(obj, key, {
+			value: val,
+			enumerable: !!enumerable,
+			writable: true,
+			configurable: true
+		})
+	}
+
+	function defineReactive(data, key, val) { // 
+		if (typeof val === 'object') { // 递归子属性
+			new Observer(val);
+		}
+		let dep = new Dep();
+		Object.defineProperty(data, key, {
+			enumerable: true,
+			configurable: true,
+			get() {
+				dep.depend();
+				return val;
+			},
+			set(newVal) {
+				if (val === newVal) {
+					return
+				}
+				val = newVal;
+				dep.notify();
+				console.log(dep);
+			}
+		})
+	}
+</script>

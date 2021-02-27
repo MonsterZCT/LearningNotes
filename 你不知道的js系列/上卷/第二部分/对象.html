@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	// 数组
+	{
+		let fn = () => {
+			let array = [1, 2]
+			array.name = 'array';
+			console.log(array);
+		}
+		// fn();
+	}
+	// JSON复制
+	{
+		let fn = () => {
+			let object = {
+				name: 'jack',
+				sex: null,
+				age: undefined,
+				// o: obj //报错
+			}
+			let obj = {
+				o: object
+			}
+			let copy = JSON.parse(JSON.stringify(object))
+			console.log(copy, copy.age);
+		}
+		// fn();
+	}
+	// get set
+	{
+		let fn = () => {
+			let object = {
+				_name: 'jack',
+				get name() {
+					console.log('get');
+					return this._name;
+				},
+				set name(val) {
+					console.log('set');
+					this._name = val;
+				}
+			}
+			console.log(object.name);
+			object.name = 'lili';
+			console.log(object);
+		}
+		fn();
+	}
+	// every some
+	{
+		let fn = () => {
+			let array = [1, 2, 3, 4, 5];
+			let arrx = array.every((value) => {
+				if (value > 3) {
+					return false
+				}
+			})
+			console.log(arrx);
+
+			let arry = array.some((value, index) => {
+				if (value > 3) {
+					return true;
+				}
+			})
+			console.log(arry);
+		}
+		fn();
+	}
+</script>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	let array = [],
+		object = {},
+		number = 1,
+		string = 'string',
+		bool = true,
+		nul = null,
+		unde = undefined,
+		symbol = Symbol('symbol');
+
+	console.log(array, object, number, string, bool, nul, unde, symbol);
+	console.log(typeof array, typeof object, typeof number, typeof string,
+		typeof bool, typeof nul, typeof unde, typeof symbol);
+	console.log(Object.prototype.toString.call(array),
+		Object.prototype.toString.call(object),
+		Object.prototype.toString.call(number),
+		Object.prototype.toString.call(string),
+		Object.prototype.toString.call(bool),
+		Object.prototype.toString.call(nul),
+		Object.prototype.toString.call(unde),
+		Object.prototype.toString.call(symbol));
+	console.log(Object.prototype.toString);
+</script>

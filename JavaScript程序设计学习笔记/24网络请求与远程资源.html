@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	let axios = function (config = {
+		method: 'get',
+		url: 'http://127.0.0.1:8081/',
+		isAsync: 'true',
+		data: {}
+	}) {
+		return new Promise((resolve, reject) => {
+			let xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function () {
+				console.log(xhr.readyState);
+				if (xhr.readyState == 4) {
+					resolve(JSON.parse(xhr.responseText));
+				}
+			}
+
+			// get
+			if (config.method === 'get') {
+				for (const key in config.data) {
+					if (Object.hasOwnProperty.call(config.data, key)) {
+						if (!config.url.includes('?')) {
+							config.url += '?';
+						}
+						config.url += key + '=' + config.data[key] + '&'
+					}
+				}
+				config.url.includes('?') && (config.url = config.url.slice(0, -1));
+			}
+
+			xhr.open(config.method, config.url, config.isAsync);
+			xhr.send(config.data);
+			xhr.timeout = 1000;
+			xhr.ontimeout = function () {
+				console.log('timeout');
+			}
+		})
+	}
+	let _config = {
+		method: 'get',
+		url: 'http://127.0.0.1:8081/',
+		isAsync: 'true',
+		data: {
+			name: 'jack'
+		}
+	}
+	// xhr
+	{
+		let fn = () => {
+			let xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState == 4) {
+					console.log(xhr.responseText);
+				}
+			}
+			xhr.open('get', 'http://127.0.0.1:8081/', true);
+			xhr.send(null);
+			console.log('aaaa');
+		}
+		// fn();
+	}
+	// axios
+	{
+		let fn = () => {
+
+			let data = {
+				name: 'lili'
+			}
+			let config = {
+				..._config,
+				data
+			}
+			axios(config).then((res) => {
+				console.log(res);
+			})
+		}
+		// fn();
+	}
+	//
+	{
+		let fn = () => {
+			let data = new FormData();
+			data.append('name', 'jack');
+			let config = {
+				..._config,
+				data,
+				method: 'post'
+			}
+
+			axios(config).then((res) => {
+				console.log(res);
+			})
+
+			console.log(new Headers({
+				'Content-Type': 'application/json'
+			}));
+		}
+		// fn();
+	}
+	// fetch
+	{
+		let fn = () => {
+			let clone
+			fetch('http://127.0.0.1:8081/', {
+				mothod: 'get',
+				headers: new Headers({
+					'Content-Type': 'application/json'
+				})
+			}).then((res) => {
+
+				
+				return res.body;
+			}).then((res) => {
+				console.log(res.getReader().read());
+			})
+		}
+		// fn();
+	}
+	// web socket
+	{
+		let fn=()=>{
+			// let socket = new WebSocket('ws://127.0.0.1:8081/')
+		}
+		fn();
+	}
+</script>

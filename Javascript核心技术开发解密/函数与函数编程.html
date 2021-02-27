@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	console.log(foo);
+	var foo = {}
+
+	function foo() {}
+	console.log(foo);
+
+	// {
+	// 	console.log(foo);
+	// 	// var foo = {}
+
+	// 	function foo() {
+	// 		console.log(this);
+	// 	}
+	// 	console.log(foo);
+	// }
+	// 
+	{
+		(function () {
+			console.log(this);
+		})()
+	}
+
+	// 
+	{
+		let fn = () => {
+			let array = [1, 2]
+			let arr = array.forEach((i) => {
+				console.log(i);
+				return i + 2
+			})
+			console.log(array, arr);
+
+			let array_map = array.map((value, index) => {
+				return value + 1;
+			})
+			console.log(array, array_map);
+		}
+		// fn();
+	}
+	// arguments
+	{
+		let fn = () => {
+			function A() {
+				function B() {
+					console.log(arguments);
+					arguments[0] = 2;
+					console.log(arguments);
+				}
+				B(1, 2);
+			}
+			A({});
+		}
+		fn();
+	}
+	// 科里化 curry
+	{
+		function add() {
+			let args = Array.from(arguments);
+			return args.reduce((previousValue, currentValue) => {
+				return previousValue + currentValue
+			}, 0)
+		}
+		console.log(add(1, 2, 3));
+		// add(1,2)(3)
+
+		Function.prototype.curry = function (func) {
+
+		}
+	}
+</script>

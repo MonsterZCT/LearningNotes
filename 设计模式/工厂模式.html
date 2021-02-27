@@ -29,11 +29,30 @@
 			console.log(p.name, p.age, p.sex);
 		}
 		return p;
+
+		//或者
+		// this.name = name;
+		// this.age = age;
+		// this.sex = sex;
+		// this.say = function () {
+		// 	console.log(this.name);
+		// }
 	}
 	let jack = new Person('jack', 12, 'boy');
 	let lili = new Person('jack', 16, 'gril');
 	console.log(jack);
 	console.log(lili);
+	jack.say();
 
-	
+	//安全模式
+	//防止出现 let fac = Factory();没有new 这种情况
+	function Factory(name) {
+		if (this instanceof Factory) {
+			this.name = name;
+		} else {
+			return new Factory(name);
+		}
+	}
+
+	//抽象工厂类
 </script>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	{
+		let map = new Map([
+			['name', 'jack']
+		]);
+		console.log(map, Array.from(map), map[Symbol.iterator]());
+
+		let iterator = map[Symbol.iterator]();
+		console.log(iterator.next(), iterator.next(), iterator.next());
+	}
+
+	{
+		class ArrayIterator {
+			constructor() {
+					this.array = [...arguments];
+				}
+				[Symbol.iterator]() {
+					let index = 0;
+					let self = this;
+					return {
+						next() {
+							if (index < self.array.length) {
+								return {
+									done: false,
+									value: self.array[index++]
+								}
+							} else {
+								return {
+									done: true,
+									value: undefined
+								}
+							}
+						},
+						return () {
+							console.log('提前终止迭代器');
+							return {
+								done: true,
+								value: undefined
+							}
+						}
+					}
+				}
+		}
+		let array = new ArrayIterator(1, 2, 3, 4, 5);
+		let iterator = array[Symbol.iterator]();
+		console.log(array, iterator.next(), iterator.next(), iterator.return());
+
+		let array2 = new ArrayIterator(10, 9, 8, 7, 6);
+		let iterator2 = array2[Symbol.iterator]();
+		console.log(array2, iterator2.next(), iterator2.next());
+
+		let array3 = new ArrayIterator(10, 9, 8, 7, 6);
+		let iterator3 = array3[Symbol.iterator]();
+		for (const iterator of array3) {
+			if (iterator < 10) {
+				break;
+			}
+			console.log(iterator);
+		}
+		console.log(iterator3.next());
+	}
+
+	{
+		// 生成器
+		function* generatorFn() {
+			yield 'jack';
+			yield 'lili';
+			yield 'baby';
+		}
+		let g = generatorFn();
+		console.log(g, g.next(), g.next(), g === g[Symbol.iterator]);
+		console.log(g, g instanceof Function);
+		for (const iterator of generatorFn()) {
+			console.log(iterator);
+		}
+	}
+
+	{
+		// 生成器传参
+		console.log('生成器传参');
+
+		function* generatorFn(init) {
+			console.log(yield);
+			console.log(yield);
+			yield
+			yield
+		}
+		let g = generatorFn();
+		g.next('init'); // 不起作用
+		g.next('hello world');
+		g.next();
+	}
+
+	{
+		// 生成器迭代可迭代对象
+		console.log('生成器迭代可迭代对象');
+
+		function* generatorFn(init) {
+			yield*[1, 2, 3]
+		}
+		let g = generatorFn();
+		console.log(g.next(), g.next(), g.next());
+	}
+
+	{
+		// 生成器作为默认迭代器
+		console.log('生成器作为默认迭代器');
+		class Foo {
+			constructor() {
+					this.array = [...arguments];
+				}
+				*[Symbol.iterator]() {
+					yield* this.array;
+				}
+		}
+		let foo = new Foo(1, 2, 3);
+		for (const iterator of foo) {
+			console.log(iterator);
+		}
+	}
+</script>

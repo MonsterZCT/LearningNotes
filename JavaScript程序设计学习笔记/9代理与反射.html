@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	{
+		let target = {
+			id: 'target'
+		};
+		let handler = {};
+		let proxy = new Proxy(target, handler);
+		console.log(target.id, proxy.id);
+		target.id = 'foo';
+		proxy.id = 'bar';
+		console.log(target.id, proxy.id);
+	}
+	//
+	{
+		console.log('====================');
+		let target = {
+			id: 'target'
+		};
+		let handler2 = {
+			get() {
+				console.log(...arguments);
+				return 'handler override'
+			},
+			set() {
+				console.log('set', ...arguments);
+			}
+		}
+		let proxy2 = new Proxy(target, handler2);
+		console.log(target.id, proxy2.id);
+		target.id = 'foo';
+		proxy2.id = 'bar';
+		console.log(target.id, proxy2.id, proxy2);
+	}
+	// 反射API
+	{
+		console.log('====================');
+		let target = {
+			id: 'target'
+		};
+		let handler = {
+			// get() {
+			// 	console.log(...arguments);
+			// 	return Reflect.get(...arguments);
+			// },
+			get: Reflect.get,
+		};
+		let proxy = new Proxy(target, handler);
+		console.log(target.id, proxy.id);
+
+		let proxy2 = new Proxy(target, Reflect);
+		console.log(target.id, proxy2.id);
+	}
+	// 可撤销代理对象与目标对象的关联  
+	{
+		console.log('====================');
+		let target = {
+			id: 'target'
+		};
+		let handler = {
+			get() {
+				return 'get'
+			}
+		};
+		let {
+			proxy,
+			revoke
+		} = Proxy.revocable(target, handler);
+		console.log(target.id, proxy.id);
+		revoke(); // 撤销函数幂等，撤销代理后不可逆
+		// console.log(proxy.id);
+	}
+	//多层代理
+	{
+		console.log('====================');
+		const target = {
+			foo: 'bar'
+		}
+		const firstProxy = new Proxy(target, {
+			get() {
+				console.log('first proxy');
+				return Reflect.get(...arguments)
+			}
+		})
+		const secondProxy = new Proxy(firstProxy, {
+			get() {
+				console.log('second proxy');
+				return Reflect.get(...arguments)
+			}
+		})
+		console.log(secondProxy.foo);
+	}
+	//代理捕获器与反射方法
+	{
+		//deleteProperty
+		const myTarget = {
+			foo: 'bar'
+		}
+		const proxy = new Proxy(myTarget, {
+			deleteProperty(target, property) {
+				console.log('delete');
+				return Reflect.deleteProperty(...arguments)
+			}
+		})
+		console.log(delete proxy.foo, myTarget);
+	} {
+		const prototype1 = {};
+		const object1 = Object.create(prototype1);
+		console.log(Object.getPrototypeOf(object1) === prototype1);
+		console.log(prototype1.isPrototypeOf(object1));
+		console.log(object1.__proto__);
+	}
+</script>

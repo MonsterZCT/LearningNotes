@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	// 5.1 Date RegExp 
+	let date = new Date();
+	console.log(new Date(Date.parse('5/1/2020')));
+	console.log(new Date(Date.UTC(2020, 1, 18, 1, 8, 1)));
+
+	console.log(date);
+	console.log(Date.now());
+
+	let start = Date.now();
+	let i = 0;
+	while (i < Math.pow(2, 15)) {
+		i++;
+	}
+	let end = Date.now();
+	console.log(end - start);
+
+	let date1 = new Date(2020, 0, 1);
+	let date2 = new Date(2020, 1, 1);
+	console.log(date2 < date1, date2 - date1);
+
+	// 5.1.2 日期格式化方法
+	console.log(date.toDateString());
+	console.log(date.toTimeString());
+	console.log(date.toLocaleString());
+	console.log(date.toLocaleTimeString());
+	console.log(date.toUTCString());
+
+	// 5.1.3 日期/时间组件方法
+	console.log(date.getTime(), date.getFullYear(), date.getMonth(),
+		date.getDate(), date.getDay());
+
+	// 5.2 RegExp
+	let text = 'jack is a good boy and student'
+	let pattern = /s/gi
+	console.log(pattern.exec(text), pattern.exec(text));
+	console.log(RegExp.input, RegExp.leftContext);
+
+	console.log(/s/.test('s'), pattern.test('s'));
+	console.log(RegExp.input, RegExp.leftContext);
+
+	// 5.3 原始值包装类型
+	let s1 = 'red';
+	let s2 = s1.substring(1);
+	console.log(s1, s2);
+
+	let message = 'abcde';
+	console.log(message.charAt(2), message.charCodeAt(2), message.codePointAt(2));
+
+	// slice substr subString
+	// slice(start,end),将负参数当成字符串长度+负值
+	// substr(start,number),将第一个负参数当作字符串长度+该值，第二个参数转换为0
+	// subString(start,end)，所有参数转换成0
+	let stringValue = 'hello world';
+	console.log(stringValue.slice(3), stringValue.substring(3, 7),
+		stringValue.substr(3, 7));
+	console.log(stringValue.slice(-20), stringValue.substring(3, -4));
+	console.log(stringValue.substr(3, -4));
+	console.log([1,2,3,4,5].slice(1,4));
+</script>

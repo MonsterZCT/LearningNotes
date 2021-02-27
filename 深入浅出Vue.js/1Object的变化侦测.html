@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	class Dep {  // 依赖收集
+		constructor() {
+			this.subs = [];
+		}
+		addSub(sub) {
+			this.subs.push(sub);
+		}
+		remove(sub) {
+			// remove(this.subs, sub);
+			if (this.subs.length) {
+				const index = this.subs.indexOf(sub);
+				if (index > -1) {
+					return this.subs.splice(index, 1);
+				}
+			}
+		}
+		depend() {
+			if (window.target) {
+				this.addSub(window.target);
+			}
+		}
+		notify() {
+			const subs = this.subs.slice();
+			for (let i = 0; i < subs.length; i++) {
+				subs[i].update();
+			}
+		}
+	}
+
+	function defineReactive(data, key, val) {  // 
+		if (typeof val === 'object') { // 递归子属性
+			new Observer(val);
+		}
+		let dep = new Dep();
+		Object.defineProperty(data, key, {
+			enumerable: true,
+			configurable: true,
+			get() {
+				dep.depend();
+				return val;
+			},
+			set(newVal) {
+				if (val === newVal) {
+					return
+				}
+				val = newVal;
+				dep.notify();
+				console.log(dep);
+			}
+		})
+	}
+	let object = {
+		name: 'jack'
+	};
+	defineReactive(object, 'name', 'lili');
+	console.log(object.name);
+	object.name = 'ming';
+	console.log(object.name);
+
+	class Watcher {
+		constructor(vm, expOrFn, cb) {
+			this.vm = vm;
+			this.getter = parsePath(expOrFn);
+			this.cb = cb;
+			this.value = this.get();
+		}
+		get() {
+			window.target = this;
+			let value = this.getter.call(this.vm, this.vm);
+			window.target = undefined;
+			return value;
+		}
+		update() {
+			const oldValue = this.value;
+			this.value = this.get();
+			this.cb.call(this.vm, this.value, oldValue);
+		}
+	}
+	const bailRE = /[^\w.$]/
+
+	function parsePath(path) {
+		if (bailRE.test(path)) {
+			return
+		}
+		const segments = path.split('.');
+		return function (obj) {
+			for (let i = 0; i < segments.length; i++) {
+				if (!obj) {
+					return
+				}
+				obj = obj[segments[i]]
+			}
+			return obj;
+		}
+	}
+
+	class Observer {
+		constructor(value) {
+			this.value = value;
+			if (!Array.isArray(value)) {
+				this.walk(value);
+			}
+		}
+		walk(obj) {
+			const keys = Object.keys(obj);
+			for (let i = 0; i < keys.length; i++) {
+				defineReactive(obj, keys[i], obj[keys[i]])
+			}
+		}
+	}
+</script>

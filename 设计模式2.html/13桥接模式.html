@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	桥接模式：在系统沿着多个维度变化的同时，又不增加其复杂度并已达到解耦。
+</body>
+
+</html>
+<script>
+	class Speed {
+		constructor(x, y) {
+			this.x = x;
+			this.y = y;
+		}
+		run() {
+			console.log('run');
+		}
+	}
+	class Color {
+		constructor(color) {
+			this.color = color;
+		}
+		draw() {
+			console.log('draw');
+		}
+	}
+
+	//球类
+	class Ball {
+		constructor(name, x, y, color) {
+			this.name = name;
+			this.speed = new Speed(x, y);
+			this.color = new Color('color');
+		}
+		init() {
+			console.log(this.name);
+			this.speed.run();
+			this.color.draw();
+		}
+	}
+	let ball = new Ball('basketball', 2, 5, 'red');
+	ball.init();
+
+	//人类
+	class Person {
+		constructor(name, x, y, color) {
+			this.name = name;
+			this.speed = new Speed(x, y);
+			this.color = new Color('color');
+		}
+		init() {
+			console.log(this.name);
+			this.speed.run();
+			this.color.draw();
+		}
+	}
+	let person = new Person('jack', 2, 5, 'red');
+	person.init();
+</script>

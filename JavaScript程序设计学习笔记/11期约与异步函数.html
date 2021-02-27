@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	// trycatch 无法捕捉异步错误
+	{
+		// try {
+		// 	setTimeout(() => {
+		// 		throw new Error('error')
+		// 	}, 0);
+		// } catch (error) {
+
+		// }
+	}
+	// promise setTimeout
+	{
+		let fn = () => {
+			console.log(11111);
+			new Promise((resolve, reject) => {
+				resolve();
+			}).then(() => {
+				console.log('promise-pre');
+			});
+
+			setTimeout(() => {
+				console.log('setTimeout-pre');
+			}, 0);
+
+			console.log(22222);
+			new Promise((resolve, reject) => {
+				resolve();
+			}).then(() => {
+				console.log('promise-middle');
+			});;
+
+			new Promise((resolve, reject) => {
+				resolve();
+			}).then(() => {
+				console.log('promise-setTimeout');
+				setTimeout(() => {
+					console.log('setTimeout-middle');
+				}, 0);
+			});
+
+			console.log(33333);
+			setTimeout(() => {
+				console.log('setTimeout');
+			}, 0);
+		}
+		// fn();
+	}
+
+	// 实现promise
+	{
+		// let fn = () => {
+		// 	class MyPromise {
+		// 		status = 'pending';
+		// 		parameters = []
+		// 		constructor(func) {
+		// 			let that = this;
+
+		// 			function resolve() {
+		// 				that.status = 'fulfilled';
+		// 				that.parameters = Array.from(arguments);
+		// 			}
+
+		// 			function reject() {
+		// 				that.status = 'rejected';
+		// 				that.parameters = Array.from(arguments);
+		// 			}
+		// 			if (func instanceof Function) {
+		// 				console.log(this);
+		// 				func(resolve, reject);
+		// 			} else {
+		// 				throw new Error('请传入函数')
+		// 			}
+		// 		}
+
+		// 		then(callback) {
+		// 			if (callback instanceof Function) {
+		// 				if (this.status === 'fulfilled') {
+		// 					callback(...this.parameters);
+		// 				}
+		// 			}
+		// 			return this;
+		// 		}
+		// 		catch (callback) {
+		// 			if (this.status === 'rejected') {
+		// 				callback(...this.parameters);
+		// 			}
+		// 			return this;
+		// 		} finally(callback) {
+		// 			if (callback instanceof Function) {
+		// 				callback(...this.parameters);
+		// 			}
+		// 			return this;
+		// 		}
+		// 	}
+
+		// 	let name = 'jack';
+		// 	let mypromise = new MyPromise((resolve, reject) => {
+		// 		console.log('name');
+		// 		resolve('name is ' + name);
+		// 	}).then((name) => {
+		// 		console.log('then');
+		// 		console.log(name);
+		// 	}).catch(() => {
+		// 		console.log('catch');
+		// 	});
+		// }
+		// fn();
+	}
+	// then
+	{
+		let fn = () => {
+			let pro = new Promise((resolve, reject) => {
+				throw new Error('error')
+			}).catch(() => {
+				console.log('catch');
+			});
+			console.log(pro);
+		}
+		// fn();
+	}
+	// Promise new Promise
+	{
+		let fn = () => {
+			let p = Promise.resolve();
+			p.then(() => {
+				console.log('fn-then');
+			})
+
+			let q = new Promise((resolve, reject) => {
+				resolve();
+			})
+			q.then(() => {
+				console.log('fn-q');
+			})
+			console.log(p, q, 'fn');
+			console.log(Promise, new Promise(() => {}));
+		}
+		// fn();
+	}
+	// finally
+	{
+		let fn = () => {
+			new Promise((resolve, reject) => {
+					resolve('jack');
+					reject('error');
+				}).then(() => {
+					console.log('resolve');
+					// throw new Error('error')
+					console.log('resolve-error');
+				})
+				.catch((e) => {
+					console.log('catch', e);
+					// throw new Error('error');
+				})
+				.finally((e) => {
+					console.log(e);
+					console.log('finally');
+				})
+			console.log('fn');
+		}
+		// fn();
+	}
+	// 
+	{
+		let fn = () => {
+			console.log(new Date());
+			setTimeout(() => {
+				console.log('2000');
+			}, 2000);
+			setTimeout(() => {
+				console.log('fn');
+				console.log(new Date());
+			}, 1000);
+			for (let i = 0; i < Math.pow(2, 32); i++) {}
+		}
+		// fn();
+	}
+
+	// 异步函数
+	{
+		let fn = () => {
+			async function asy() {
+				return 3
+			}
+			asy().then((res) => {
+				console.log(res);
+			})
+			console.log(asy());
+		}
+		fn();
+	}
+	//
+	{
+		let array = [1, 2, 3, 4, 5]
+		let n = array.map((_, i) => {
+			return _ + 2;
+		}, [])
+		console.log(n);
+	}
+</script>

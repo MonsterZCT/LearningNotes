@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	function say() {
+		console.log(this.name);
+	}
+
+	function Person(sex, age) {
+		this.sex = sex;
+		this.age = age;
+		console.log(this);
+	}
+	let object = {
+		name: 'jack'
+	}
+	// call 
+	{
+		let fn = () => {
+			Function.prototype._call = function (object) {
+				let args = Array.from(arguments).slice(1);
+				object._function = this;
+				object._function(...args);
+				delete object._function;
+			}
+
+			Person._call(object, 'boy', 18);
+			Person.call(object, 'boy', 18);
+			Person.bind(object, 'boy', 18)()
+		}
+		// fn();
+	}
+	// bind
+	// Function.prototype.apply
+	// Function.prototype.bind
+	{
+		let fn = () => {
+			Function.prototype._bind = function (object) {
+				let Person = this;
+				let args = Array.from(arguments).slice(1);
+
+				function callback() {
+					Person.call(object, ...args, ...Array.from(arguments));
+				}
+				callback.prototype = this.prototype;
+				return callback;
+			}
+			let fB = Person._bind({
+				name: 'lili'
+			});
+			let fB2 = Person._bind(object);
+
+			fB2('boy', 11);
+			fB('gril', 12)
+
+			Person._bind(object)('boy', 18);
+			Person.bind(object, 'boy', 18)()
+		}
+		// fn();
+	}
+	// bind绑定 ++
+	{
+		let fn = () => {
+			console.log('=================================');
+			Function.prototype._bind = function (oThis) {
+				if (typeof this !== 'function') {
+					throw new TypeError('type error');
+				}
+				let args = Array.from(arguments).slice(1),
+					fToBind = this,
+					PersonOP = function () {},
+					fBound = function () {
+						return fToBind.apply(this instanceof PersonOP ? this : oThis,
+							args.concat(Array.from(arguments)));
+					}
+				PersonOP.prototype = this.prototype; // 为new作准备，链接prototype
+				fBound.prototype = new PersonOP(); // 为new作准备
+				return fBound;
+			}
+			// let fB = Person._bind(object);
+			// let fB2 = Person._bind({
+			// 	name: 'lili'
+			// });
+			// fB2('boy', 11);
+			// fB('gril', 12);
+
+			console.log('-----------------------');
+
+			let fB3 = Person._bind({
+				name: 'ming'
+			});
+			fB3('gril', 11);
+
+			let ming = new fB3('boy', 13);
+
+			// let fB4 = Person._bind(null);
+			// console.log(new fB4('boy', 20));
+		}
+		fn();
+	}
+	// bind 进行柯里化 X
+	{
+		let fn = () => {
+			function foo(a, b, c) {
+				console.log(a, b, c);
+			}
+			Function.prototype.curry = function () {
+				let args = Array.from(arguments);
+				if (this.length <= args.length) {
+					return this(...args);
+				}
+				return this.bind(null, ...args);
+			}
+			foo.curry()(2, 3);
+			// let foob = foo.bind(null, 1, 2);
+			// console.log(foob.length);
+		}
+		// fn();
+	}
+	// softBind 软绑定
+	{
+		let fn = () => {
+			Function.prototype.softBind = function (object) {
+				let args = Array.from(arguments).slice(1);
+				let that = this;
+				return function () {
+					args = args.concat(Array.from(arguments));
+					that.apply((!this || this === (window || global)) ?
+						object : that, args);
+				}
+			}
+			let person = Person.softBind(object);
+			person('boy', 11);
+
+			let lili = {
+				name: 'lili',
+				person: Person
+			}
+			lili.person('gril', 11);
+		}
+		// fn();
+	}
+
+	// {} instanceof function(){}
+	{
+		let fn = () => {
+			let person = function () {}
+			console.log({}
+				instanceof person);
+		}
+		fn();
+	}
+</script>

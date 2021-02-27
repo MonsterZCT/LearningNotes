@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	{
+		let fn = () => {
+			const con = {
+				name: 'jack'
+			}
+			let lili = {
+				name: 'lili'
+			}
+			// con = lili;
+			// con ={}
+			// con = 'lili'
+		}
+		fn();
+	}
+	// var 变量提升
+	{
+		let fn = () => {
+			console.log(a, b);
+			var a = 'jack';
+			var b;
+			b = 'lili'
+		}
+		fn();
+	}
+	// console.log(arguments);
+</script>
