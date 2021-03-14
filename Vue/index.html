@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="app-4">
+		<ol>
+			<li v-for="todo in todos">
+				{{ todo.text }}
+			</li>
+		</ol>
+		<ol>
+			<!-- 创建一个 todo-item 组件的实例 -->
+			<todo-item :todo="todos[0]"></todo-item>
+		</ol>
+	</div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+	Vue.component('todo-item', {
+		// todo-item 组件现在接受一个
+		// "prop"，类似于一个自定义 attribute。
+		// 这个 prop 名为 todo。
+		props: ['todo'],
+		template: '<li>{{ todo.text }}</li>'
+	})
+	var app4 = new Vue({
+		el: '#app-4',
+		data: {
+			todos: [{
+					text: '学习 JavaScript'
+				},
+				{
+					text: '学习 Vue'
+				},
+				{
+					text: '整个牛项目'
+				}
+			]
+		}
+	})
+
+	// 我们的数据对象
+	var data = {
+		a: 1
+	}
+
+	// 该对象被加入到一个 Vue 实例中
+	var vm = new Vue({
+		data: data
+	})
+</script>

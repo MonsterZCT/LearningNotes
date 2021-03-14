@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	function Animal(name, type) {
+		this.name = name || 'jack';
+		this.type = type || 'animal';
+		this.eat = function () {
+			console.log(`${this.name} is eating!`);
+		}
+	}
+
+	Animal.prototype.say = function () {
+		console.log('hello world!');
+	}
+
+	// 原型链
+	function Cat() {}
+	Cat.prototype = new Animal();
+
+	// 盗用构造函数
+	function Dog() {
+		Animal.call(this, arguments);
+	}
+
+	// 组合继承 (调用两次父类)
+	function Tiger() {
+		Animal.call(this, arguments);
+	}
+	Tiger.prototype = new Animal();
+
+	// 原型式
+	let animal = {
+		name:'',
+		type:'',
+		say() {}
+	}
+
+	function object(o) { // Object.create(o);
+		function F() {}
+		F.prototype = o;
+		return new F();
+	}
+
+	let lion = object(animal);
+
+	// 寄生式继承
+	function createAnimal(o) {
+		let clone = object(o);
+		clone.say = function () {
+			console.log('hello world!');
+		}
+		return clone;
+	}
+
+	// 寄生式组合继承 (没有运行两次父类，只是将父类作为某个过渡函数的原型对象了)
+	function inherit(sub, sup) {
+		let prototype = Object.create(sup.prototype);
+		prototype.constructor = sub;
+		sub.prototype = prototype;
+	}
+
+	function Mouse() {
+		Animal.call(this, arguments);
+	}
+	inherit(Mouse, Animal);
+
+	// 类
+	class _Animal {
+		constructor() {}
+		say() {}
+	}
+
+	class Pigeon extends _Animal {
+		constructor(args) {
+			super(args);
+		}
+	}
+</script>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	var data = [{
+			parentId: 0,
+			id: 1,
+			value: '1'
+		},
+		{
+			parentId: 3,
+			id: 2,
+			value: '2'
+		},
+		{
+			parentId: 0,
+			id: 3,
+			value: '3'
+		},
+		{
+			parentId: 1,
+			id: 4,
+			value: '4'
+		},
+		{
+			parentId: 1,
+			id: 5,
+			value: '5'
+		},
+	];
+
+	/**
+	请把该数据整理为树状结构, 该树每个节点的结构如下, 
+	node = {
+	    children: [],
+	    id: id,
+	    value: value
+	}
+	**/
+	class Node {
+		constructor(children, id, value) {
+			this.children = [];
+			this.id = id;
+			this.value = value;
+		}
+	}
+
+	function transform(data) {
+		let nodes = {};
+		data.forEach((value, index) => {
+			if (!!nodes[value.id]) { //存在
+				nodes[value.id].value = value.value;
+			} else {
+				nodes[value.id] = {
+					children: [],
+					id: value.id,
+					value: value.value
+				}
+			}
+			if (!!nodes[value.parentId]) { //父节点存在
+				nodes[value.parentId].children.push(nodes[value.id]);
+			} else {
+				nodes[value.parentId] = {
+					children: [nodes[value.id]],
+					id: value.parentId,
+					value: null
+				}
+			}
+		})
+		for (const key in nodes) {
+			if (Object.hasOwnProperty.call(nodes, key) && (!nodes[key].parentId)) {
+				return nodes[key];
+			}
+		}
+	}
+	console.log(transform(data));
+</script>

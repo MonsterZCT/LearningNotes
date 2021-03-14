@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	//请手动实现一个compose函数，满足以下功能：例：
+	var arr = [func1, func2, func3];
+
+	function func1(ctx, next) {
+		ctx.index++
+		next();
+	}
+
+	function func2(ctx, next) {
+		setTimeout(function () {
+			ctx.index++
+			next();
+		});
+	}
+
+	function func3(ctx, next) {
+		console.log(ctx.index);
+	}
+
+	compose(arr)({
+		index: 0
+	});
+
+	function compose(array) {
+		let index = 0,
+			ctx;
+
+		function next() {
+			array[index++](ctx, next);
+		}
+		return function () {
+			ctx = arguments[0];
+			next();
+		}
+	}
+
+	// out: 2
+
+	/****/
+	function queue(list) {
+		// 在这里填写。
+		let index = 0;
+
+		function next() {
+			list[index] && list[index++](next);
+		}
+		next();
+	}
+
+	function task1(next) {
+		setTimeout(function () {
+			console.log(1);
+			next();
+		}, 1000)
+	}
+
+	function task2(next) {
+		console.log(2)
+		next();
+	}
+
+	function task3(next) {
+		setTimeout(function () {
+			console.log(3);
+			next();
+		}, 200)
+	}
+
+	queue([task1, task2, task3]) // 1 2 3
+</script>

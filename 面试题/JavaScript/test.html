@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	let array = [1, 2, 3];
+	// {
+	// 	name: 'jack',
+	// 	age: 13
+	// }
+	//
+	// array[Symbol.iterator] = function* () {
+	// 	for (let index = 0; index < this.length; index++) {
+	// 		yield this[index]
+	// 	}
+	// }
+	// array[Symbol.iterator] = function () {
+	// 	let _this = this,
+	// 		nextIndex = 0;
+	// 	return {
+	// 		next() {
+	// 			return nextIndex < _this.length ? {
+	// 				value: _this[nextIndex++],
+	// 				done: false
+	// 			} : {
+	// 				value: undefined,
+	// 				done: true
+	// 			}
+	// 		}
+	// 	}
+	// }
+	// let iterator = array[Symbol.iterator]();
+	// console.log(iterator.next(), iterator.next(),
+	// 	iterator.next(), iterator.next());
+
+	// let result = array.find((value) => {
+	// 	console.log(value);
+	// 	return value > 1;
+	// })
+	// console.log(result);
+
+	// let result = /[abc]*123[def]/g.test('xxxabc123defeee');
+	// console.log(result);
+	function* fn(){
+		let index = 0;
+		while (index<array.length) {
+			yield array[index]
+			index++
+		}
+	}
+	console.log(fn().next().value);
+</script>

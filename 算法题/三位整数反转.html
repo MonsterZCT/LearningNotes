@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	let number = 5425769012;
+
+	function reverse(number) {
+		return Number(
+			[...number.toString()].reverse().reduce((previous, current) => {
+				if (previous === '' && current === '0') {
+					return ''
+				}
+				return previous += current;
+			}, '')
+		)
+	}
+	// let rev = reverse(number);
+	// console.log(rev);
+	console.log('1 2 3'.replace(/\d/g, parseInt));
+	function _parseInt(){
+		console.log(arguments);
+		return parseInt(...arguments);
+	}
+	console.log('1 2 3'.replace(/\d/g, _parseInt));
+	console.log(parseInt('2',0));
+</script>
