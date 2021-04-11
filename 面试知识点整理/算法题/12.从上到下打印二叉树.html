@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	class Node {
+		constructor(val) {
+			this.val = val;
+			this.left = null;
+			this.right = null;
+		}
+	}
+	let tree = new Node(1),
+		left, right;
+	tree.left = left = new Node(2);
+	tree.right = right = new Node(3);
+	left.left = new Node(4);
+	left.right = new Node(5);
+
+	function PrintFromTopToBottom(root) {
+		// write code here
+		let result = []
+
+		function record(root, level) {
+			if (!root) return
+			if (!result[level]) result[level] = [];
+			result[level].push(root.val);
+			record(root.left, level + 1);
+			record(root.right, level + 1);
+		}
+
+		record(root,0);
+		return result.flat(Infinity);
+	}
+	console.log(PrintFromTopToBottom(tree));
+</script>

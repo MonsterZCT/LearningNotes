@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	class Node {
+		constructor(val) {
+			this.val = val;
+			this.next = null;
+		}
+	}
+	let head = new Node(1);
+	head.next = head;
+	let head2 = new Node(2);
+	head2.next = new Node(3);
+	head2.next.next = new Node(4);
+	head2.next.next.next = head2;
+
+	function searchLoop(head) {
+		if (!head || !head.next) return null;
+		let p = head,
+			q = head.next;
+		while (q && q.next) {
+			if (p === q) return p;
+			p = p.next;
+			q = q.next.next;
+		}
+		return null;
+	}
+	console.log(searchLoop(head));
+	console.log(searchLoop(head2));
+</script>

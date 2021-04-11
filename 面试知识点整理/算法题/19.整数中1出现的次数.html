@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	function NumberOf1Between1AndN_Solution(n) {
+		// write code here
+		let time = 0
+		for (let i = 1; i <= n; i++) {
+			let array = i.toString().split('');
+			console.log(array);
+			let index = array.indexOf('1');
+			while (index !== -1) {
+				time++;
+				array.splice(index, 1);
+				index = array.indexOf('1');
+			}
+		}
+		return time;
+	}
+	console.log(NumberOf1Between1AndN_Solution(5));
+</script>

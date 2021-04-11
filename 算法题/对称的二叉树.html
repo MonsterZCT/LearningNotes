@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	class Node {
+		constructor(val) {
+			this.val = val;
+			this.left = this.right = null;
+		}
+	}
+	let root = new Node(1);
+	root.left = new Node(2), root.right = new Node(2);
+	root.left.left = new Node(3), root.right.right = new Node(3);
+	root.left.right = new Node(4), root.right.left = new Node(4);
+
+	console.log(root);
+	var isSymmetric = function (root) {
+		if (root === null) {
+			return true;
+		}
+		return recur(root.left, root.right);
+	};
+
+	function recur(left, right) {
+		if (left === null && right === null) {
+			return true;
+		}
+		if (left === null || right === null ||left.val !== right.val) {
+			return false;
+		}
+		if (!recur(left.left, right.right) || !recur(left.right, right.left)) {
+			return false;
+		};
+		return true;
+	}
+	console.log(isSymmetric(root));
+</script>

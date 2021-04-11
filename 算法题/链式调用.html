@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	class U {
+		constructor() {
+			this.promise = null;
+		}
+		console(str) {
+			if (this.promise !== null) {
+				this.promise = this.promise.then(() => {
+					console.log(str);
+					return
+				})
+			} else {
+				console.log(str);
+			}
+			return this
+		}
+		setTimeout(time) {
+			if (!this.promise) {
+				this.promise = Promise.resolve();
+			}
+			this.promise = this.promise.then(() => {
+				setTimeout(() => {
+					return
+				}, time)
+			})
+			return this
+		}
+	}
+
+	// Promise.prototype.console = function (str) {
+	// 	console.log(str);
+	// 	return this;
+	// }
+	// Promise.prototype.setTimeout = function (time) {
+	// 	return new Promise(() => {
+	// 		setTimeout(() => {}, time)
+	// 	}).then(() => {})
+	// }
+	// let u = new Promise(() => {})
+	let u = new U();
+	// u.console('jack').setTimeout(2000).console('lili').setTimeout(1000)
+	console.log(u.console('jack').setTimeout(2000).console('lili'));
+</script>

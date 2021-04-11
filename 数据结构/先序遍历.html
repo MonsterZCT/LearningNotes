@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	class Node {
+		constructor(val) {
+			this.val = val;
+			this.left = null;
+			this.right = null;
+		}
+	}
+	let root = new Node('root');
+	let left = root.left = new Node('root-left');
+	let right = root.right = new Node('root-right');
+	left.left = new Node('left-left');
+	left.right = new Node('left-right');
+	right.left = new Node('right-left');
+	right.right = new Node('right-right');
+
+	function preorder(root) {
+		console.log(root.val);
+		if (root.left !== null) {
+			preorder(root.left);
+		}
+		if (root.right !== null) {
+			preorder(root.right);
+		}
+	}
+	// preorder(root);
+
+	function inorder(root) {
+		if (root.left !== null) {
+			inorder(root.left);
+		}
+		console.log(root.val);
+		if (root.right !== null) {
+			inorder(root.right);
+		}
+	}
+	// inorder(root);
+
+	function postorder(root) {
+		if (root.left !== null) {
+			postorder(root.left);
+		}
+		if (root.right !== null) {
+			postorder(root.right);
+		}
+		console.log(root.val);
+	}
+	postorder(root);
+</script>

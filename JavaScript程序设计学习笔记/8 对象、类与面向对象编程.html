@@ -18,16 +18,116 @@
 		let a = {},
 			b = {},
 			c = a;
-		console.log(Object.is(a, b), Object.is(a, c));
-	} 
+		// console.log(Object.is(a, b), Object.is(a, c));
+	} {
+		// // 可计算属性
+		// function createName() {
+		// 	return 'name';
+		// }
+		// let person = {
+		// 	[createName()]: 'jack'
+		// }
+		// console.log(person);
+	}
+	// 继承
 	{
-		// 可计算属性
-		function createName() {
-			return 'name';
+		// 原型
+		function A(name) {
+			this.name = name;
 		}
-		let person = {
-			[createName()]: 'jack'
+
+		function B(sex) {
+			this.sex = sex;
 		}
-		console.log(person);
+		B.prototype.say = function () {} //
+	}
+	//
+	{
+		// 盗用函数式继承
+		let fn = () => {
+			function A(name) {
+				this.name = name;
+			}
+
+			function B(sex) {
+				A.call(this); //
+				this.sex = sex;
+			}
+		}
+		// fn();
+	}
+	//
+	{
+		// 组合继承
+		let fn = () => {
+			function A(name) {
+				this.name = name;
+			}
+
+			function B(sex) {
+				A.call(this); //
+				this.sex = sex;
+			}
+			B.prototype.say = new A() //
+		}
+		// fn();
+	}
+	//
+	{
+		// 原型式继承 Object.create()
+		let fn = () => {
+			function object(o) {
+				function F() {}
+				F.prototype = o;
+				return new F();
+			}
+		}
+		// fn();
+	}
+	//
+	{
+		// 寄生式继承
+		let fn = () => {
+			function createAnother(o) {
+				let clone = Object.create(o);
+				clone.say = function () {}
+				return clone
+			}
+		}
+		// fn();
+	}
+	//
+	{
+		// 寄生组合式继承
+		let fn = () => {
+			function inheritPrototype(a, b) {
+				let prototype = Object.create(a);
+				prototype.constructor = a;
+				b.prototype = prototype;
+			}
+		}
+		// fn();
+	}
+	//
+	{
+		// extends继承
+		let fn = () => {
+			class A {
+				constructor(name) {
+					this.name = name;
+				}
+			}
+			class B extends A {
+				constructor(name, sex) {
+					super(name);
+					this.sex = sex;
+				}
+			}
+			let b = new B();
+			console.log(b.__proto__ === B.prototype);
+			console.log(B.__proto__ === A);
+			console.log(B.prototype.__proto__ === A.prototype);
+		}
+		fn();
 	}
 </script>

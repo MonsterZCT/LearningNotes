@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	function FindMinCoins(coins = [1, 2, 5], amount = 11) {
+		let f = []
+		f[0] = 0
+		for (let i = 1; i <= amount; i++) {
+			f[i] = Infinity
+			for (let j = 0; j < coins.length; j++) {
+				if (i - coins[j] >= 0) {
+					f[i] = Math.min(f[i], f[i - coins[j]] + 1);
+				}
+			}
+		}
+		if(f[amount]===Infinity) return -1;
+		return f[amount]
+	}
+	console.log(FindMinCoins([2],3));
+</script>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	输入一个链表，输出该链表中倒数第k个结点。
+	如果该链表长度小于k，请返回空。
+</body>
+
+</html>
+<script>
+	class Node {
+		constructor(val) {
+			this.val = val;
+			this.next = null;
+		}
+	}
+
+	let head = new Node(1);
+	head.next = new Node(2);
+	head.next.next = new Node(3);
+
+	function FindKthToTail(pHead, k) {
+		// write code here
+		let p = head,
+			q = head,
+			i = 1
+		while (i <= k && q !== null) {
+			q=q.next;
+			i++;
+		}
+		if (i<=k) {
+			return null 
+		}
+		while (q!==null) {
+			q=q.next;
+			p=p.next;
+		}
+		return p;
+	}
+
+	console.log(FindKthToTail(head,3));
+</script>

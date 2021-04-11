@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	const target = {
+		name: 'name'
+	}
+	let handle = {
+		get(target, property, receiver) {
+			console.log('get');
+			console.log(target, property, receiver);
+		},
+		set(target, property, value, receiver) {
+			console.log('set');
+			console.log(...arguments);
+			Reflect.set(...arguments);
+		},
+		has(target, property) {
+			console.log('has');
+			console.log(...arguments);
+			return Reflect.has(...arguments);
+		},
+
+	}
+	const proxy = new Proxy(target, handle)
+	console.log(proxy);
+	proxy.name = 'lili';
+	target.name = 'jack';
+	console.log(proxy);
+	console.log('name' in proxy);
+</script>

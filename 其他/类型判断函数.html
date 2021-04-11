@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	function typeJudge(value) {
+		let type = Object.prototype.toString.call(value)
+			.split(' ')[1].split('');
+		type.pop();
+		type = type.join('');
+		return type.toLowerCase();
+	}
+	console.log(typeJudge(null));
+	console.log(typeJudge('zifuchuan'));
+	console.log(typeJudge(/abc/));
+	console.log(typeJudge(() => {}));
+	console.log(typeJudge([1, 2, 3]));
+</script>

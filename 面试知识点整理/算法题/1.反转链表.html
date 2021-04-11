@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	function ListNode(x) {
+		this.val = x;
+		this.next = null;
+	}
+	let head = new ListNode(1);
+	head.next = new ListNode(2);
+	head.next.next = new ListNode(3);
+
+	function printListFromTailToHead(head) {
+		if (head === null || head.next === null) return head;
+		let next = head.next,
+			temp;
+		head.next = null;
+		while (next !== null) {
+			temp = next.next;
+			next.next = head;
+			head = next;
+			next = temp;
+		}
+		return head;
+	}
+	console.log(printListFromTailToHead(head));
+</script>

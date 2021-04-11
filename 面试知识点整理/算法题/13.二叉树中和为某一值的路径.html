@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	class Node {
+		constructor(val) {
+			this.val = val;
+			this.left = null;
+			this.right = null;
+		}
+	}
+	let tree = new Node(1),
+		left, right;
+	tree.left = left = new Node(2);
+	tree.right = right = new Node(3);
+	left.left = new Node(4);
+	left.right = new Node(1);
+
+	function FindPath(root, expectNumber) {
+		// write code here
+		let result = []
+		find(root, expectNumber, [])
+
+		function find(root, expectNumber, path) {
+			let oPath = Array.from(path);
+			if (!root) return
+			oPath.push(root.val);
+			if (expectNumber === root.val && !root.left && !root.right) result.push(oPath);
+			find(root.left, expectNumber - root.val, oPath);
+			find(root.right, expectNumber - root.val, oPath);
+		}
+		return result
+	}
+	console.log(FindPath(tree, 3));
+</script>

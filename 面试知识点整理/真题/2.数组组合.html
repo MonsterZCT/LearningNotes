@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	//[['a', 'b'], ['n', 'm'], ['0', '1']] => ["an0", "an1", "am0", "am1", "bn0", "bn1", "bm0", "bm1"]
+	let array = [
+		['a', 'b'],
+		['n', 'm'],
+		['0', '1']
+	]
+
+	function merge(array) {
+		if (array.length === 1) return array;
+		let result = []
+		while (array.length > 1) {
+			let arrx = array.splice(0, 1).flat(2),
+				arry = array.splice(0, 1).flat(2)
+			for (let i = 0; i < arrx.length; i++) {
+				for (let j = 0; j < arry.length; j++) {
+					result.push(arrx[i] + arry[j])
+				}
+			}
+			array.unshift(result);
+			result = [];
+		}
+		return array[0]
+	}
+
+	console.log(merge(array));
+</script>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	function FindGreatestSumOfSubArray(array) {
+		// write code here
+		let max = 0,
+			sum = 0
+		for (let i = 0; i < array.length; i++) {
+			if (i === 0) max = array[i];
+			sum += array[i];
+			max = Math.max(sum, max);
+			sum < 0 && (sum = 0)
+		}
+		return max;
+	}
+	console.log(FindGreatestSumOfSubArray([1, -2, 3, 10, -4, 7, 2, -5]));
+</script>

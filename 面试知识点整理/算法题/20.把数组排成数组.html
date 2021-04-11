@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	function PrintMinNumber(array) {
+		// write code here
+		array.sort((a, b) => {
+			let arrx = a.toString().split(''),
+				arry = b.toString().split(''),
+				p = 0,
+				q = 0
+			while (true) {
+				if (arrx[p] !== arry[q]) return arrx[p] - arry[q];
+				if(p===arrx.length-1 && q===arry.length-1) return -1;
+				if (p !== arrx.length - 1) p++;
+				if (q !== arry.length - 1) q++;
+			}
+		})
+		return array.join('')
+	}
+	console.log(PrintMinNumber([3,32,321,45,18,3]));
+</script>

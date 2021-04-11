@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	输出所有和为S的连续正数序列。序列内按照从小至大的顺序，序列间按照开始数字从小到大的顺序
+</body>
+
+</html>
+<script>
+	function FindContinuousSequence(sum) {
+		// write code here
+		let middle = Math.ceil(sum / 2),
+			result = [],
+			temp
+		for (let i = 1; i <= middle; i++) {
+			temp = [0]
+			for (let j = i; j <= middle && temp[0] + j <= sum; j++) {
+				temp.push(j);
+				temp[0] += j;
+			}
+			if (temp[0] === sum && temp.length >= 3) {
+				temp.shift();
+				result.push(temp);
+			}
+		}
+		return result;
+	}
+	console.log(FindContinuousSequence(9));
+</script>

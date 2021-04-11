@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	function Permutation(str) {
+		// write code here
+		let array = str.split('')
+
+		function add(array) {
+			if (array.length === 0) return ['']
+			let res = []
+			for (let i = 0; i < array.length; i++) {
+				let arr = add([...array.slice(0, i), ...array.slice(i + 1)]);
+				arr.forEach((item) => {
+					res.push(array[i] + item);
+				})
+			}
+			return res;
+		}
+		return Array.from(new Set(add(array)));
+	}
+	console.log((Permutation('abc')));
+</script>

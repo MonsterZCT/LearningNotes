@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	let pushV = [1, 2, 3, 4, 5],
+		popV = [4, 3, 5, 1, 2]
+		// popV = [5,4,3,2,1]
+
+	function IsPopOrder(pushV, popV) {
+		// write code here
+		let bool = popV.every((value)=>{
+			return pushV.includes(value)
+		})
+		if(!bool || pushV.length!==popV.length) return false
+		let stack = pushV.splice(0, pushV.indexOf(popV[0]) + 1);
+		while (popV.length !== 0) {
+			if (stack.includes(popV[0])) {
+				if (stack.pop() !== popV.shift()) return false;
+			} else {
+				stack.push(pushV.shift());
+			}
+		}
+		return true;
+	}
+	console.log(IsPopOrder(pushV, popV));
+</script>

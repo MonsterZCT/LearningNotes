@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	let arr1 = [1, 6],
+		arr2 = [3, 5, 1, 954, 63, 454, 5, 45, 2, 2, 8]
+	// 快排 O(nlogn) O(logn)
+	// function QuickSort(arr) {
+	// 	let array = [...arr]
+	// 	if (array.length <= 1) {
+	// 		return array;
+	// 	}
+	// 	let left = [],
+	// 		right = [],
+	// 		pivotIndex = Math.floor(array.length / 2),
+	// 		pivot = array.splice(pivotIndex, 1)[0];
+	// 	array.forEach((value, index) => {
+	// 		if (value < pivot) {
+	// 			left.push(value);
+	// 		} else {
+	// 			right.push(value);
+	// 		}
+	// 	})
+	// 	return [...QuickSort(left), pivot, ...QuickSort(right)];
+	// }
+	// console.log(QuickSort(arr1), QuickSort(arr2));
+	//
+	function QuickSort2(array) {
+		if (array.length <= 1) {
+			return array;
+		}
+		let left = 0,
+			right = array.length - 1,
+			pivotIndex = Math.floor(array.length / 2),
+			pivot = array[pivotIndex],
+			temp
+		while (right > left) {
+			while (array[left] < pivot) {
+				left++;
+			}
+			while (array[right] > pivot) {
+				right--;
+			}
+			if (left <= right) {
+				temp = array[right];
+				array[right] = array[left];
+				array[left] = temp;
+				left++;
+				right--;
+			}
+		}
+		return [...QuickSort2(array.slice(0, right + 1)), ...QuickSort2(array.slice(right + 1))]
+	}
+	console.log(QuickSort2(arr2));
+
+	// 冒泡排序
+	function BubbleSort(arr) {
+		let array = [...arr]
+		let temp;
+		for (let i = 0; i < array.length; i++) {
+			for (let j = 0; j < array.length - i - 1; j++) {
+				if (array[j] > array[j + 1]) {
+					temp = array[j];
+					array[j] = array[j + 1];
+					array[j + 1] = temp;
+				}
+			}
+		}
+		return array;
+	}
+	console.log(BubbleSort(arr2));
+
+	// 选择排序
+	function selectSort(arr) {
+		let array = [...arr]
+		let min, temp
+		for (let i = 0; i < array.length; i++) {
+			min = i;
+			for (let j = i + 1; j < array.length; j++) {
+				if (array[min] > array[j]) {
+					min = j;
+				}
+			}
+			temp = array[i];
+			array[i] = array[min];
+			array[min] = temp;
+		}
+		return array;
+	}
+	console.log(selectSort(arr2));
+
+	// 插入排序
+	function insertSort(arr){
+		let array = [...arr]
+		
+	}
+</script>

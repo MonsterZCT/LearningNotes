@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	class Node {
+		constructor(val) {
+			this.val = val;
+			this.next = null;
+		}
+	}
+
+	let head1 = new Node(1);
+	head1.next = new Node(3);
+	head1.next.next = new Node(5);
+
+	let head2 = new Node(2);
+	head2.next = new Node(4);
+	head2.next.next = new Node(6);
+
+	function Merge(pHead1, pHead2) {
+		// write code here
+		let head = p = {}
+		while (pHead1 !== null && pHead2 !== null) {
+			if (pHead1.val < pHead2.val) {
+				p.next = pHead1;
+				pHead1 = pHead1.next;
+			} else {
+				p.next = pHead2;
+				pHead2 = pHead2.next;
+			}
+			p = p.next;
+		};
+		if (pHead1 !== null) {
+			p.next = pHead1;
+		}
+		if (pHead2 !== null) {
+			p.next = pHead2;
+		}
+		head = head.next;
+		return head;
+	}
+	console.log(Merge(head1, head2));
+</script>

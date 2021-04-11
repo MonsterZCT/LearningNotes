@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。
+</body>
+
+</html>
+<script>
+	function FindNumsAppearOnce(array) {
+		// write code here
+		let obj = {},
+			result = []
+		for (let i = 0; i < array.length; i++) {
+			if (obj[array[i]] !== undefined) delete obj[array[i]]
+			else obj[array[i]] = 1;
+		}
+		for (let i in obj) {
+			console.log(i);
+			if (obj.hasOwnProperty(i)) {
+				result.push(i)
+			}
+		}
+		return result
+	}
+
+	function FindNumsAppearOnce2(array) {
+		// write code here
+		let result = []
+		array.sort();
+		for (let i = 0; i < array.length; i++) {
+			if (array[i] !== array[i + 1] && array[i] !== array[i - 1]) {
+				result.push(array[i]);
+			}
+		}
+		return result
+	}
+	console.log(FindNumsAppearOnce([1, 4, 1, 6]));
+	console.log(FindNumsAppearOnce2([1, 4, 1, 6]));
+</script>

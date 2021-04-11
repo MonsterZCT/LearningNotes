@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	class Node {
+		constructor(val) {
+			this.label = val;
+			this.next = null;
+			this.random = null;
+		}
+	}
+	let tree = new Node(1)
+	tree.next = new Node(2)
+	tree.random = tree.next.next = new Node(3)
+
+	function Clone(pHead) {
+		// write code here
+		let cHead = new Node(null);
+		copy(pHead, cHead, 'next');
+
+		function copy(node, cParent, tag) {
+			if (!node) return
+			if (!!node.clone) {
+				cParent[tag] = node.clone;
+				return 
+			}
+			let cNode = new Node(node.label);
+			cParent[tag] = cNode;
+			node.clone = cNode;
+			copy(node.next, cNode, 'next');
+			copy(node.random, cNode, 'random');
+		}
+		return cHead.next;
+	}
+	console.log(Clone(tree));
+</script>

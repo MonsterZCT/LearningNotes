@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	把只包含质因子2、3和5的数称作丑数（Ugly Number）。例如6、8都是丑数，但14不是，因为它包含质因子7。 习惯上我们把1当做是第一个丑数。求按从小到大的顺序的第N个丑数。
+</body>
+
+</html>
+<script>
+	function GetUglyNumber_Solution(index) {
+		// write code here
+		function judge(number) {
+			while (number % 2 === 0) {
+				number /= 2;
+			}
+			while (number % 5 === 0) {
+				number /= 5;
+			}
+			while (number % 3 === 0) {
+				number /= 3;
+			}
+			if (number === 1) return true;
+			return false;
+		}
+
+		for (let i = 1, total = 0; total < index; i++) {
+			if (judge(i)) total++;
+			if (total === index) {
+				return i
+			}
+		}
+	}
+
+	function GetUglyNumber_Solution2(index) {
+		// write code here
+		if (index == 0) return 0
+		let arr = [1]
+		let a = 0,
+			b = 0,
+			c = 0
+		for (let i = 1; i < index; i++) {
+			arr[i] = Math.min(arr[a] * 2, arr[b] * 3, arr[c] * 5)
+			if (arr[i] == arr[a] * 2) {
+				a++
+			}
+			if (arr[i] == arr[b] * 3) {
+				b++
+			}
+			if (arr[i] == arr[c] * 5) {
+				c++
+			}
+		}
+		return arr[index - 1]
+	}
+	console.log(GetUglyNumber_Solution(19));
+</script>

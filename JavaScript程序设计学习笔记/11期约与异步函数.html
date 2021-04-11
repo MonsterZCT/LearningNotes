@@ -202,14 +202,38 @@
 			})
 			console.log(asy());
 		}
-		fn();
+		// fn();
 	}
 	//
 	{
-		let array = [1, 2, 3, 4, 5]
-		let n = array.map((_, i) => {
-			return _ + 2;
-		}, [])
-		console.log(n);
+		let fn = () => {
+			let array = [1, 2, 3, 4, 5]
+			let n = array.map((_, i) => {
+				return _ + 2;
+			}, [])
+			console.log(n);
+		}
+		// fn();
+	}
+	// 无返回值 调用then
+	{
+		let fn = () => {
+			let pro = Promise.resolve(3),
+				pro1 = new Promise((resolve) => {
+					resolve();
+				})
+			console.log(pro, pro1);
+			let pro2 = pro.then(() => {
+					console.log(11);
+					setTimeout(() => {
+						console.log(33);
+					}, 0)
+				})
+				.then(() => {
+					console.log(22);
+				})
+			console.log(pro2);
+		}
+		fn();
 	}
 </script>

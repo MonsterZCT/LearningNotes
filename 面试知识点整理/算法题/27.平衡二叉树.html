@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	输入一棵二叉树，判断该二叉树是否是平衡二叉树。
+	在这里，我们只需要考虑其平衡性，不需要考虑其是不是排序二叉树
+	平衡二叉树（Balanced Binary Tree），具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。
+</body>
+
+</html>
+<script>
+	function IsBalanced_Solution(pRoot) {
+		// write code here
+		if(!pRoot) return true;
+
+		function find(root, num) {
+			if (!root) return num;
+			return Math.max(find(root.left, num + 1), find(root.right, num + 1));
+		}
+		let left = find(pRoot.left, 0),
+			right = find(pRoot.right, 0)
+		if (left - right <= 1 && right - left <= 1) {
+			if (IsBalanced_Solution(pRoot.left) &&
+				IsBalanced_Solution(pRoot.right)) {
+				return true;
+			}
+		}
+		return false;
+	}
+</script>

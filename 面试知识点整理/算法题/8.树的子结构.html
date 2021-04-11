@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	class Node {
+		constructor(val) {
+			this.val = val;
+			this.left = null;
+			this.right = null;
+		}
+	}
+	let tree = new Node(1),
+		left, right;
+	tree.left = left = new Node(2);
+	tree.right = right = new Node(3);
+	left.left = new Node(4);
+	left.right = new Node(5);
+
+	let node = new Node(2);
+	node.left = new Node(4);
+	// node.right = new Node(5);
+
+	function HasSubtree(pRoot1, pRoot2) {
+		// write code here
+		if (!pRoot2) return false;
+		return ergodic(pRoot1, pRoot2, test);
+
+		function ergodic(tree, node, callback) {
+			if (callback(tree, node)) {
+				return true;
+			}
+			if (!tree) return false;
+			if (tree.left && ergodic(tree.left, node, callback)) return true;
+			if (tree.right && ergodic(tree.right, node, callback)) return true;
+			return false;
+		}
+
+		function test(pRoot1, pRoot2) {
+			if (!pRoot2) return true;
+			if (!pRoot1 || pRoot1.val !== pRoot2.val) return false;
+			if (!test(pRoot1.left, pRoot2.left)) return false;
+			if (!test(pRoot1.right, pRoot2.right)) return false;
+			return true
+		}
+	}
+
+
+
+
+	console.log(HasSubtree(tree, node));
+</script>

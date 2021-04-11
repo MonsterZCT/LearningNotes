@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+	let matrix = [
+			[1, 2, 3],
+			[4, 5, 6],
+			[7, 8, 9]
+		],
+		array = [
+			[1],
+			[2],
+			[3],
+			[4],
+			[5]
+		]
+
+	function printMatrix(matrix) {
+		// write code here
+		let result = []
+		while (matrix.length !== 0) {
+			result.push(...matrix.splice(0, 1)[0])
+			for (let i = 0; i < matrix.length - 1;) {
+				result.push(...matrix[i].splice(matrix[i].length - 1, 1));
+				if (matrix[i].length === 0) {
+					matrix.splice(i, 1);
+				} else {
+					i++;
+				}
+			}
+			if (matrix.length === 0) break;
+			result.push(...matrix.splice(matrix.length - 1, 1)[0].reverse());
+			for (let i = matrix.length - 1; i > 0; i--) {
+				result.push(matrix[i].splice(0, 1));
+			}
+		}
+		return result;
+	}
+	console.log(printMatrix(array));
+</script>
