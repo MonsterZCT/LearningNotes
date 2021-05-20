@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<div id="root">
+		<div id="son1"></div>
+		<div id="son2"></div>
+		<div id="son3"></div>
+	</div>
+	<div id="root2">
+		root2
+	</div>
+</body>
+</html>
+<style>
+	*{
+		padding: 0;
+		margin:0;
+	}
+	#root{
+		height: 300px;
+		width: 100%;
+		padding-top: 100px;
+	}
+	#son1{
+		background-color: steelblue;
+		height: 1px;
+		width: 100%;
+		transform: scale(1,0.5);
+		margin-bottom: 20px;
+	}
+	#son2{
+		background-color: steelblue;
+		height: 1px;
+		width: 100%;
+		margin-bottom: 20px;
+	}
+	#son3{
+		background-color: steelblue;
+		height: 0.5px;
+		width: 100%;
+		margin-bottom: 20px;
+	}
+	#root2::before{
+		content: '';
+		display: block;
+		height: 1px;
+		background-color: steelblue;
+		transform: scale(0.5);
+	}
+	#root2::after{
+		content: '';
+		display: block;
+		height: 1px;
+		background-color: steelblue;
+	}
+</style>

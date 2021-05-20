@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="root">
+		<div class="son">first</div>
+		<div class="son">second</div>
+	</div>
+</body>
+
+</html>
+<style>
+	#root {
+		direction: ltr;
+
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: space-around;
+		align-items: center;
+		flex-wrap: nowrap;
+	}
+
+	.son {
+		height: 200px;
+		width: 300px;
+
+		flex: 0 0 auto;
+	}
+
+	.son:nth-child(1) {
+		background-color: skyblue;
+	}
+
+	.son:nth-child(2) {
+		background-color: rgb(161, 175, 180);
+	}
+</style>

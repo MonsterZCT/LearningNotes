@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+box-shodow:X轴偏移量、Y轴偏移量、模糊半径、扩散半径和颜色。
+
+<body>
+	<h2>圆角 border-radius</h2>
+	<div id="app"></div>
+	<div id="bitmap">bitmap</div>
+	<div id="gradient">gradient</div>
+</body>
+
+</html>
+<style>
+	#app {
+		border: solid 2px rgb(17, 141, 190);
+		background: rgb(0, 255, 255);
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		box-shadow: 5px 5px 1px 1px rgba(0, 0, 255, 0.2);
+		;
+	}
+
+	#bitmap{
+		background: rgb(0, 255, 255);
+		border: 30px solid;
+		border-image: url('./border.png') 10 10;
+		padding: 20px;
+	}
+
+	#gradient {
+		background: rgb(0, 255, 255);
+		border: 30px solid;
+		border-image: linear-gradient(red, yellow) 5;
+		padding: 20px;
+	}
+</style>

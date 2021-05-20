@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="root">
+		<div id="overspead">overspead</div>
+		<div id="normal" onclick="console.log('xxx')">normal</div>
+	</div>
+</body>
+
+</html>
+<style>
+	* {
+		padding: 0;
+		margin: 0;
+	}
+
+	html,
+	body,
+	#root {
+		height: 100%;
+		width: 100%;
+		position: relative;
+		overflow: auto;
+	}
+
+	#normal{
+		height: 300px;
+		width: 300px;
+		background-color: skyblue;
+	}
+
+	#overspead{
+		position: fixed;
+		background-color: slategray;
+		height: 100%;
+		width: 100%;
+		opacity: 0.5;
+		z-index: 1;
+
+		text-align: center;
+	}
+</style>
